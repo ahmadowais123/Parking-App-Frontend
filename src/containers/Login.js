@@ -28,9 +28,9 @@ export default class Login extends Component {
 
   render() {
     return (
-      <div className="Login">
+      <p className="Login">
         <form onSubmit={this.handleSubmit}>
-          <FormGroup controlId="email" bsSize="large">
+          <FormGroup controlId="email" bsSize="medium">
             <ControlLabel>Email</ControlLabel>
             <FormControl
               autoFocus
@@ -39,7 +39,7 @@ export default class Login extends Component {
               onChange={this.handleChange}
             />
           </FormGroup>
-          <FormGroup controlId="password" bsSize="large">
+          <FormGroup controlId="password" bsSize="medium">
             <ControlLabel>Password</ControlLabel>
             <FormControl
               value={this.state.password}
@@ -49,14 +49,14 @@ export default class Login extends Component {
           </FormGroup>
           <Button
             block
-            bsSize="large"
+            bsSize="medium"
             disabled={!this.validateForm()}
             type="submit"
           >
             Login
           </Button>
         </form>
-      </div>
+      </p>
     );
   }
 }
