@@ -5,6 +5,8 @@ import Routes from "./Routes";
 import { Nav, Navbar, NavItem } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 
+//Add tabs to the navigation bar here
+
 class App extends Component {
   render() {
     return (

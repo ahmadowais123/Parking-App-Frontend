@@ -1,6 +1,11 @@
 import React, { Component } from "react";
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import "./Login.css";
+import {validateEmail} from "./Helpers.js";
+
+//check login page for more comments
+
+
 
 export default class Login extends Component {
   constructor(props) {
@@ -14,7 +19,8 @@ export default class Login extends Component {
   }
 
   validateForm() {
-    return this.state.email.length > 0 && this.state.password.length > 0 && this.state.password === this.state.password2;
+    return validateEmail(this.state.email) && this.state.password.length > 0 && 
+    this.state.password === this.state.password2;
   }
 
   handleChange = event => {
@@ -51,7 +57,7 @@ export default class Login extends Component {
           <FormGroup controlId="password2" bsSize="medium">
             <ControlLabel>Confirm Password</ControlLabel>
             <FormControl
-              value={this.state.password}
+              value={this.state.password2}
               onChange={this.handleChange}
               type="password"
             />

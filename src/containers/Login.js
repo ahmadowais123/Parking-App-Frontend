@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import "./Login.css";
+import {validateEmail} from "./Helpers.js";
 
 export default class Login extends Component {
   constructor(props) {
@@ -13,15 +14,18 @@ export default class Login extends Component {
   }
 
   validateForm() {
-    return this.state.email.length > 0 && this.state.password.length > 0;
+    return validateEmail(this.state.email) && this.state.password.length > 0;
   }
 
+
+  //changes appropriate state variables for whatever is typed into the fields
   handleChange = event => {
     this.setState({
       [event.target.id]: event.target.value
     });
   }
 
+  //suppresses the browser's default action on button press (for now at least)
   handleSubmit = event => {
     event.preventDefault();
   }
@@ -50,7 +54,7 @@ export default class Login extends Component {
           <Button
             block
             bsSize="medium"
-            disabled={!this.validateForm()}
+            disabled={!this.validateForm()}     //the button is enabled only if the set conditions are satisfied
             type="submit"
           >
             Login

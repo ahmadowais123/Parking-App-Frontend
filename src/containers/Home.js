@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import "./Home.css";
 
+//The default homepage; add search stuff here
+
 export default class Home extends Component {
   render() {
     return (
