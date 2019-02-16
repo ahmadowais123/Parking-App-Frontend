@@ -43,6 +43,7 @@ export default class Login extends Component {
     var usrl = this.state.lastName;
     var pass = this.state.password;
     var mail = this.state.email;
+    var role = this.state.role;
     var headers = {
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*'}
@@ -98,6 +99,13 @@ export default class Login extends Component {
               value={this.state.email}
               onChange={this.handleChange}
             />
+          </FormGroup>
+          <FormGroup controlId="email" bsSize="medium">
+              <ControlLabel>Role</ControlLabel><br/>
+              <select value={this.state.role}>
+                  <option value="Renter">Renter</option>
+                  <option value="Renter">Seller</option>
+              </select>
           </FormGroup>
           <FormGroup controlId="password" bsSize="medium">
             <ControlLabel>Password</ControlLabel>
