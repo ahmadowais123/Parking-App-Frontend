@@ -17,14 +17,15 @@ export default class Login extends Component {
       lastName: "",
       email: "",
       password: "",
-      password2: ""
+      password2: "",
+      role: ""
     };
   }
 
   validateForm() {
     return validateEmail(this.state.email) && this.state.password.length > 0 && 
     this.state.firstName.length > 0 && this.state.lastName.length > 0 &&
-    this.state.password == this.state.password2;
+    this.state.password === this.state.password2 && this.state.role !=null;
   }
 
   handleChange = event => {
@@ -43,7 +44,19 @@ export default class Login extends Component {
     var usrl = this.state.lastName;
     var pass = this.state.password;
     var mail = this.state.email;
-    var role = this.state.role;
+    var renter = false;
+    var seller = false;
+    
+    if (this.state.role === "Renter"){
+      renter = true;
+      seller = false;
+    }
+
+    else if (this.state.role === "Seller"){
+      renter = false;
+      seller = true;
+    }
+
     var headers = {
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*'}
@@ -57,8 +70,8 @@ export default class Login extends Component {
         id: "30",
         password: pass,
         email: mail,
-        isRenter: "true",
-        isSeller: "false", 
+        isRenter: renter,
+        isSeller: seller, 
         parkingManager: 
         {
           pkey: "1"
@@ -100,12 +113,14 @@ export default class Login extends Component {
               onChange={this.handleChange}
             />
           </FormGroup>
-          <FormGroup controlId="email" bsSize="medium">
+          <FormGroup controlId="role" bsSize="medium">
               <ControlLabel>Role</ControlLabel><br/>
-              <select value={this.state.role}>
+              <select value={this.state.role}  onChange={this.handleChange} id="role">
                   <option value="Renter">Renter</option>
-                  <option value="Renter">Seller</option>
+                  <option value="Seller">Seller</option>
               </select>
+              <p></p>
+              <p>{this.state.value}</p>
           </FormGroup>
           <FormGroup controlId="password" bsSize="medium">
             <ControlLabel>Password</ControlLabel>
