@@ -16,6 +16,7 @@ export default class Login extends Component {
       firstName: "",
       lastName: "",
       email: "",
+      username: "",
       password: "",
       password2: "",
       role: ""
@@ -44,6 +45,7 @@ export default class Login extends Component {
     var usrl = this.state.lastName;
     var pass = this.state.password;
     var mail = this.state.email;
+    var usrn = this.state.username;
     var renter = false;
     var seller = false;
     
@@ -67,7 +69,7 @@ export default class Login extends Component {
       data: {
         firstName: usrf,
         lastName: usrl,
-        id: "30",
+        id: usrn,
         password: pass,
         email: mail,
         isRenter: renter,
@@ -121,6 +123,15 @@ export default class Login extends Component {
               </select>
               <p></p>
               <p>{this.state.value}</p>
+          </FormGroup>
+          <FormGroup controlId="username" bsSize="medium">
+            <ControlLabel>Username</ControlLabel>
+            <FormControl
+              autoFocus
+              type="username"
+              value={this.state.username}
+              onChange={this.handleChange}
+            />
           </FormGroup>
           <FormGroup controlId="password" bsSize="medium">
             <ControlLabel>Password</ControlLabel>
