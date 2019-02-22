@@ -8,12 +8,13 @@ export default class Browse extends Component{
     };
 
     async componentDidMount(){
-       const url = "https://parking-system-ecse428.herokuapp.com/user/all";
+       const url = "https://parking-system-ecse428.herokuapp.com/spot/all";
        const response = await fetch(url);
-       const data = await response.json();
-       data = JSON.parse(JSON.stringify(data[0]));
-       
+       var data = await response.json();
+       data = JSON.parse(JSON.stringify(data[1]));
+       console.log(data)
        this.setState({person: data, loading: false})
+       console.log(this.state.person)
     }
 
     render(){
@@ -22,8 +23,8 @@ export default class Browse extends Component{
             <div>loading...</div> 
             ) : (
             <div>
-                <div>{this.state.person.password}</div>
-                <div>{this.state.person.email}</div>
+                <div>{this.state.person.street_Number}</div>
+                <div>{this.state.person.steet_Name}</div>
             </div>
             )}
         </div>;
