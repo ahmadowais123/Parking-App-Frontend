@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import "./Login.css";
 import {validateEmail} from "./Helpers.js";
+import axios from 'axios';
 
 export default class Login extends Component {
   constructor(props) {
@@ -15,6 +16,29 @@ export default class Login extends Component {
 
   validateForm() {
     return validateEmail(this.state.email) && this.state.password.length > 0;
+  }
+
+  handleClick = event =>{
+    
+    var email = this.state.email;
+    var password = this.state.password;
+    var header = email + ":" + password;
+    var base64 = require('base-64');
+    header = base64.encode(header);
+
+
+    var headers = {
+      'Authorization': 'Basic ' + header,
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*'}
+
+
+    axios({
+      method: 'post',
+      url: 'https://parking-system-ecse428.herokuapp.com/user/authenticate',
+      headers: headers
+    })
+
   }
 
 
@@ -56,6 +80,7 @@ export default class Login extends Component {
             bsSize="medium"
             disabled={!this.validateForm()}     //the button is enabled only if the set conditions are satisfied
             type="submit"
+            onClick={this.handleClick} 
           >
             Login
           </Button>

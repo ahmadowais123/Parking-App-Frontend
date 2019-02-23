@@ -8,7 +8,7 @@ import Register from "./containers/Register";
 
 export default () =>
   <Switch>
-    <Route path="/" exact component={Home} />
+    <Route path="/" exact component={Login} />
     <Route path="/login" exact component={Login} />
     <Route path="/register" exact component={Register} />
   </Switch>;
