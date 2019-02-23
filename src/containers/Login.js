@@ -40,6 +40,8 @@ export default class Login extends Component {
          if(response.status == 200){
           console.log(response.data)
           localStorage.setItem('myData', JSON.stringify(response.data))
+          this.props.userHasAuthenticated(true);
+          this.props.history.push("/");
          }
       })).catch(function (error){
         console.log('Failed')
