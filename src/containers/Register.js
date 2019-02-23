@@ -63,37 +63,15 @@ export default class Login extends Component {
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*'}
 
-    /*axios({
-      method: 'post',
-      url: 'https://parking-system-ecse428.herokuapp.com/user',
-      data: {
-        firstName: usrf,
-        lastName: usrl,
-        id: usrn,
-        password: pass,
-        email: mail,
-        isRenter: renter,
-        isSeller: seller, 
-        parkingManager: 
-        {
-          pkey: "1"
-        }
-      },
-      headers: headers
-    })
-
-  }*/
-
-
-  var data = {
-    firstName: usrf,
-    lastName: usrl,
-    id: "30",
-    password: pass,
-    email: mail,
-    isRenter: "true",
-    isSeller: "false", 
-    parkingManager: 
+    var data = {
+      firstName: usrf,
+      lastName: usrl,
+      id: "30",
+      password: pass,
+      email: mail,
+      isRenter: "true",
+      isSeller: "false", 
+      parkingManager: 
     {
       pkey: "1"
     }
