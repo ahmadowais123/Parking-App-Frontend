@@ -48,7 +48,7 @@ export default class Login extends Component {
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*'}
 
-    axios({
+    /*axios({
       method: 'post',
       url: 'https://parking-system-ecse428.herokuapp.com/user',
       data: {
@@ -67,8 +67,24 @@ export default class Login extends Component {
       headers: headers
     })
 
-  }
+  }*/
 
+
+  var data = {
+    firstName: usrf,
+    lastName: usrl,
+    id: "30",
+    password: pass,
+    email: mail,
+    isRenter: "true",
+    isSeller: "false", 
+    parkingManager: 
+    {
+      pkey: "1"
+    }
+  };  
+  axios.post('/user', data, headers );
+  }
   render() {
     return (
       <p className="Login">
