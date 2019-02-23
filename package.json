@@ -5,6 +5,7 @@
   "proxy": "https://parking-system-ecse428.herokuapp.com",
   "dependencies": {
     "axios": "^0.18.0",
+    "base-64": "^0.1.0",
     "bootstrap": "^4.1.1",
     "react": "^16.7.0",
     "react-bootstrap": "^0.32.4",
