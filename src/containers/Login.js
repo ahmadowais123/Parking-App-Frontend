@@ -29,15 +29,14 @@ export default class Login extends Component {
     var headers = {
       'Authorization': 'Basic ' + header,
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*'}
+      'Access-Control-Allow-Origin': '*'
+    }
+
+    var data = {}
 
 
-    axios({
-      method: 'post',
-      url: 'http://localhost:8090/user/authenticate',
-      // url: 'https://parking-system-ecse428.herokuapp.com/user/authenticate',
-      headers: headers
-    }).then((function (response){
+    axios.post('/user/authenticate', data, {headers: headers} )
+    .then((function (response){
          if(response.status == 200){
           console.log(response.data)
           localStorage.setItem('myData', JSON.stringify(response.data))
@@ -87,7 +86,7 @@ export default class Login extends Component {
           <Button
             block
             bsSize="medium"
-            disabled={!this.validateForm()}     //the button is enabled only if the set conditions are satisfied
+           // disabled={!this.validateForm()}     //the button is enabled only if the set conditions are satisfied
             type="submit"
             onClick={this.handleClick} 
           >

@@ -8,7 +8,7 @@ import {validateEmail} from "./Helpers.js";
 
 
 
-export default class Login extends Component {
+export default class Register extends Component {
   constructor(props) {
     super(props);
 
@@ -66,7 +66,7 @@ export default class Login extends Component {
     var data = {
       firstName: usrf,
       lastName: usrl,
-      id: "30",
+      id: "430",
       password: pass,
       email: mail,
       isRenter: "true",
