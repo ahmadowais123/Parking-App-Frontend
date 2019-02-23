@@ -26,7 +26,6 @@ export default class Login extends Component {
     var base64 = require('base-64');
     header = base64.encode(header);
 
-
     var headers = {
       'Authorization': 'Basic ' + header,
       'Content-Type': 'application/json',
@@ -35,9 +34,19 @@ export default class Login extends Component {
 
     axios({
       method: 'post',
-      url: 'https://parking-system-ecse428.herokuapp.com/user/authenticate',
+      url: 'http://localhost:8090/user/authenticate',
+      // url: 'https://parking-system-ecse428.herokuapp.com/user/authenticate',
       headers: headers
-    })
+    }).then((function (response){
+         if(response.status == 200){
+          console.log(response.data)
+          localStorage.setItem('myData', JSON.stringify(response.data))
+         }
+      })).catch(function (error){
+        console.log('Failed')
+      });
+
+      
 
   }
 
