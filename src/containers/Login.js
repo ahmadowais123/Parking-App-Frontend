@@ -28,6 +28,7 @@ export default class Login extends Component {
 
     var headers = {
       'Authorization': 'Basic ' + header,
+      'Method': 'email',
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*'
     }

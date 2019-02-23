@@ -112,9 +112,9 @@ export default class Browse extends Component{
         margin: '10px'
     }
 
-    calendarStyle = {
-        display: 'inline-block'
-    }
+    // calendarStyle = {
+    //     display: 'inline-block'
+    // }
 
 
     render(){
@@ -124,8 +124,6 @@ export default class Browse extends Component{
             );
         }
         else{
-
-          
             const list =  this.state.spot.map((todo, index) => (
                 <div>
                     
@@ -145,7 +143,7 @@ export default class Browse extends Component{
             
 
             return (
-                <div>
+                
                     <div>
                         <div>
                             <Calendar
@@ -162,7 +160,7 @@ export default class Browse extends Component{
                             value={this.state.endDate}
                             />
                         </div>
-                    </div>
+                    
                     {/* <FormGroup controlId="startDate" bsSize="medium">
                             <ControlLabel>Enter start date here</ControlLabel>
                             <FormControl
