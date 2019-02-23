@@ -35,17 +35,17 @@ export default class Login extends Component {
 
     var data = {}
 
-
+    var self = this;
     axios.post('/user/authenticate', data, {headers: headers} )
     .then((function (response){
          if(response.status == 200){
-          console.log(response.data)
-          localStorage.setItem('myData', JSON.stringify(response.data))
-          this.props.userHasAuthenticated(true);
-          this.props.history.push("/");
+          self.props.userHasAuthenticated(true);
+          localStorage.setItem('myData', JSON.stringify(response.data));
+          self.props.history.push("/browse");
          }
       })).catch(function (error){
-        console.log('Failed')
+        console.log(error.response);
+        console.log('Failed');
       });
 
       
@@ -89,7 +89,7 @@ export default class Login extends Component {
           <Button
             block
             bsSize="medium"
-           // disabled={!this.validateForm()}     //the button is enabled only if the set conditions are satisfied
+            disabled={!this.validateForm()}     //the button is enabled only if the set conditions are satisfied
             type="submit"
             onClick={this.handleClick} 
           >
