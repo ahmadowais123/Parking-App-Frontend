@@ -9,7 +9,7 @@ export default class Browse extends Component{
         loading: true,
         spot: null,
         startDate: new Date(),
-        endDate: new Date(),
+        endDate: new Date()
     };
 
 
@@ -152,6 +152,7 @@ export default class Browse extends Component{
                     
                     <div >
                         <div style={this.divStyle}>
+                            <h3>Parking  {todo.pkey}   </h3>
                             <hr></hr> 
                             <p>Address: {todo.street_Number} {todo.steet_Name}</p>
                             <p>Postal Code: {todo.postal_Code }</p> 
@@ -168,6 +169,7 @@ export default class Browse extends Component{
                 
                 <div>
                     <div>
+                        <h2>Start Date</h2>
                             <Calendar
                             onChange={this.onChange}
                             value={this.state.startDate}
@@ -175,6 +177,7 @@ export default class Browse extends Component{
                     </div>
 
                     <div>
+                    <h2>End Date</h2>
                             <Calendar
                             onChange={this.onChangeEnd}
                             value={this.state.endDate}
