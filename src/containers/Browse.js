@@ -1,5 +1,4 @@
 import React,{Component} from "react";
-import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import Calendar from 'react-calendar';
 
 import axios from 'axios';
@@ -25,6 +24,21 @@ export default class Browse extends Component{
         });
     }
 
+
+    formatDate = (date) => {
+           
+        var hour = date.getHours();
+        var minutes = date.getMinutes();
+        var seconds = date.getSeconds();
+        var year = date.getFullYear();
+        var month = date.getMonth();
+        var day = date.getDay();
+        var date2 = (year+"-"+month+"-"+day+" "+hour+":"+minutes+":"+seconds);
+        return date2;
+    }
+
+    
+
     async componentDidMount(){
        const url = "https://parking-system-ecse428.herokuapp.com/spot/all";
        const response = await fetch(url);
@@ -36,22 +50,35 @@ export default class Browse extends Component{
     }
     
     displayAds= event => {
+        var values = [];
+        var keys = Object.keys(localStorage);
+        var i = keys.length;
+    
+        while ( i-- ) {
+          values.push( localStorage.getItem(keys[i]) );
+        }
+        const userR = JSON.parse(values[0]);
+
+
+        var startDateString = this.formatDate(this.state.startDate);
+        var endDateString = this.formatDate(this.state.endDate);
+
         var user = {
-            "pkey" : "4",
+            "pkey" : "13",
             "plate" : "kk6 k8h",
-            "startDate" : "2020-08-28 21:00:00", 
-            "endDate" : "2020-08-29 11:00:00", 
+            "startDate" : startDateString, 
+            "endDate" : endDateString, 
             "pricePaid" : "2", 
             "startTime" : "5", 
             "endTime" : "10", 
             "user" : {
-                "firstName" : "Alex",
-                "lastName" : "Doe",
-                "id" : "433",
-                "password" : "scrum",
-                "email" : "john@mail.mcgill.ca",
-                "isRenter" : "true",
-                "isSeller" : "false", 
+                "firstName" : String(this.state.userR.first_name),
+                "lastName" : String(this.state.userR.last_Name),
+                "id" : String(this.state.userR.userID),
+                "password" : String(this.state.userR.password),
+                "email" : String(this.state.userR.email),
+                "isRenter" : String(this.state.userR.isRenter),
+                "isSeller" : String(this.state.userR.isSeller),
                 "parkingManager" : 
                 {
                     "pkey" : "1"
@@ -61,19 +88,19 @@ export default class Browse extends Component{
                 "pkey" : "1"
             },
             "spot" : {
-                "pkey" : "321",
-                "addressNumber" : "1234",
-                "streetName" : "Kennedy",
-                "postalCode" : "H0H 0H0",
-                "avgRating" : "0",
-                "currentPrice" : "20",
+                "pkey" : "778",
+                "addressNumber" : 9988,
+                "streetName" : "Final",
+                "postalCode" : "H2H 2H2",
+                "avgRating" : 5.4,
+                "currentPrice" : 99,
                 "user" : 
                 {
-                    "firstName" : "John",
-                    "lastName" : "Doe",
-                    "id" : "428",
-                    "password" : "scrum",
-                    "email" : "john.doe@mail.mcgill.ca",
+                    "firstName" : "Antoine",
+                    "lastName" : "Hamasaki-Belanger",
+                    "id" : "430",
+                    "password" : "123",
+                    "email" : "heybigboy17@gmail.com",
                     "isRenter" : "true",
                     "isSeller" : "false", 
                     "parkingManager" : 
@@ -94,6 +121,7 @@ export default class Browse extends Component{
             'Content-Type': 'application/json',
             'Access-Control-Allow-Origin': '*'
         }
+
       
           axios({
             method: 'post',
@@ -125,17 +153,16 @@ export default class Browse extends Component{
         }
         else{
             const list =  this.state.spot.map((todo, index) => (
-                <div>
+                <div key={index}>
                     
-                    
-                    <div key={index}>
+                    <div >
                         <div style={this.divStyle}>
                             <hr></hr> 
                             <p>Address: {todo.street_Number} {todo.steet_Name}</p>
                             <p>Postal Code: {todo.postal_Code }</p> 
                             <p>Price: {todo.current_Price}</p>     
                             <p>Rating: {todo.avg_Rating}</p>  
-                            <button onClick={this.displayAds}>Reserve </button> 
+                            <button onClick={this.displayAds}>Reserve</button> 
                         </div>
                     </div>
                 </div>
@@ -144,41 +171,21 @@ export default class Browse extends Component{
 
             return (
                 
+                <div>
                     <div>
-                        <div>
                             <Calendar
                             onChange={this.onChange}
                             value={this.state.startDate}
                             />
-                        </div>
+                    </div>
 
-                       
-
-                        <div>
+                    <div>
                             <Calendar
                             onChange={this.onChangeEnd}
                             value={this.state.endDate}
                             />
-                        </div>
-                    
-                    {/* <FormGroup controlId="startDate" bsSize="medium">
-                            <ControlLabel>Enter start date here</ControlLabel>
-                            <FormControl
-                            value={this.state.startDate}
-                            onChange={this.handleChange}
-                            />
-                    </FormGroup>
+                    </div>
 
-                    <FormGroup controlId="endDate" bsSize="medium">
-                            <ControlLabel>Enter end date here</ControlLabel>
-                            <FormControl
-                            value={this.state.endDate}
-                            onChange={this.handleChange}
-                            />
-
-                            
-                    </FormGroup> */}
-                   
                     {list}
 
                 </div>
