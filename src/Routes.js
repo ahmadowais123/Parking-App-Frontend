@@ -3,15 +3,18 @@ import { Route, Switch } from "react-router-dom";
 import Home from "./containers/Home";
 import Login from "./containers/Login";
 import Register from "./containers/Register";
-import AppliedRoute from './AppliedRoute';
+import AppliedRoute from './components/AppliedRoute';
 import Browse from "./containers/Browse";
+import NotFound from "./containers/NotFound"
 
 //essentially for switching between tabs
 export default ({ childProps }) =>
   <Switch>
-   <AppliedRoute path="/" exact component={Login} props={childProps}/>
+   <AppliedRoute path="/" exact component={Home} props={childProps}/>
    <AppliedRoute path="/login" exact component={Login} props={childProps} />
    <AppliedRoute path="/register" exact component={Register} props={childProps} />
-  <AppliedRoute path="/home" exact component={Home} props={childProps}/>
-  <AppliedRoute path="/browse" exact component={Browse} props={childProps}/>
+   <AppliedRoute path="/home" exact component={Home} props={childProps}/>
+   <AppliedRoute path="/browse" exact component={Browse} props={childProps}/>
+   { /* Finally, catch all unmatched routes */ }
+    <Route component={NotFound} />
   </Switch>;
