@@ -9,7 +9,7 @@ export default class Browse extends Component{
         loading: true,
         spot: null,
         startDate: new Date(),
-        endDate: new Date()
+        endDate: new Date(),
     };
 
 
@@ -26,14 +26,7 @@ export default class Browse extends Component{
 
 
     formatDate = (date) => {
-           
-        var hour = date.getHours();
-        var minutes = date.getMinutes();
-        var seconds = date.getSeconds();
-        var year = date.getFullYear();
-        var month = date.getMonth();
-        var day = date.getDay();
-        var date2 = (year+"-"+month+"-"+day+" "+hour+":"+minutes+":"+seconds);
+        var date2 = date.toISOString().substr(0, 19).replace('T', ' ');
         return date2;
     }
 
@@ -61,24 +54,26 @@ export default class Browse extends Component{
 
 
         var startDateString = this.formatDate(this.state.startDate);
+        console.log(startDateString);
         var endDateString = this.formatDate(this.state.endDate);
+        console.log(endDateString);
 
         var user = {
-            "pkey" : "13",
-            "plate" : "kk6 k8h",
+            "pkey" : "19",
+            "plate" : "kkk k8h",
             "startDate" : startDateString, 
             "endDate" : endDateString, 
             "pricePaid" : "2", 
             "startTime" : "5", 
             "endTime" : "10", 
             "user" : {
-                "firstName" : String(this.state.userR.first_name),
-                "lastName" : String(this.state.userR.last_Name),
-                "id" : String(this.state.userR.userID),
-                "password" : String(this.state.userR.password),
-                "email" : String(this.state.userR.email),
-                "isRenter" : String(this.state.userR.isRenter),
-                "isSeller" : String(this.state.userR.isSeller),
+                "firstName" : localStorage.getItem('first_name'), //retrieve from local storage
+                "lastName" : localStorage.getItem('last_name'),
+                "id" : "1",
+                "password" : "scrum",
+                "email" : localStorage.getItem('email'),
+                "isRenter" : "true",
+                "isSeller" : "false", 
                 "parkingManager" : 
                 {
                     "pkey" : "1"
@@ -89,11 +84,11 @@ export default class Browse extends Component{
             },
             "spot" : {
                 "pkey" : "778",
-                "addressNumber" : 9988,
+                "addressNumber" : "9988",
                 "streetName" : "Final",
                 "postalCode" : "H2H 2H2",
-                "avgRating" : 5.4,
-                "currentPrice" : 99,
+                "avgRating" : "5.4",
+                "currentPrice" : "99",
                 "user" : 
                 {
                     "firstName" : "Antoine",
@@ -115,6 +110,7 @@ export default class Browse extends Component{
             }
         }
         
+        
 
         
         var headers = {
@@ -130,7 +126,6 @@ export default class Browse extends Component{
             headers: headers
           })
           
-          console.log("Reached this place");
       
     }
     
