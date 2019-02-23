@@ -4,12 +4,14 @@ import Home from "./containers/Home";
 import Login from "./containers/Login";
 import Register from "./containers/Register";
 import AppliedRoute from './AppliedRoute';
+import Browse from "./containers/Browse";
 
 //essentially for switching between tabs
-
 export default ({ childProps }) =>
   <Switch>
    <AppliedRoute path="/" exact component={Login} props={childProps}/>
    <AppliedRoute path="/login" exact component={Login} props={childProps} />
    <AppliedRoute path="/register" exact component={Register} props={childProps} />
+  <AppliedRoute path="/home" exact component={Home} props={childProps}/>
+  <AppliedRoute path="/browse" exact component={Browse} props={childProps}/>
   </Switch>;
