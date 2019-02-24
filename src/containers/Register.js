@@ -26,7 +26,7 @@ export default class Login extends Component {
   validateForm() {
     return validateEmail(this.state.email) && this.state.password.length > 0 && 
     this.state.firstName.length > 0 && this.state.lastName.length > 0 &&
-    this.state.password === this.state.password2 && this.state.role !=null;
+    this.state.password === this.state.password2 && this.state.role != null;
   }
 
   handleChange = event => {
@@ -81,10 +81,12 @@ export default class Login extends Component {
       },
       headers: headers
     })
+   
 
   }
 
   render() {
+
     return (
       <p className="Login">
         <form onSubmit={this.handleSubmit}>
