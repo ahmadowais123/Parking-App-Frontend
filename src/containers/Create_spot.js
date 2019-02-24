@@ -133,7 +133,7 @@ export default class Create_spot extends Component{
       />
       </FormGroup>
 
-      <button onClick={this.create}>ASDK</button>
+      <button onClick={this.create}>Create a parking spot</button>
       </div>
     );
   }
