@@ -15,7 +15,7 @@ class App extends Component {
       isAuthenticated: false
     };
   }
-  
+
   userHasAuthenticated = (authenticated) => {
     console.log("in authenticated func");
     this.setState({ isAuthenticated: authenticated });
@@ -25,7 +25,7 @@ class App extends Component {
     this.userHasAuthenticated(false);
     this.props.history.push("/home");
   }
-  
+
   render() {
     const childProps = {
       isAuthenticated: this.state.isAuthenticated,
@@ -43,10 +43,11 @@ class App extends Component {
           <Navbar.Collapse>
             <Nav pullRight>
             {this.state.isAuthenticated
-             ?    
+             ?
              <Fragment>
               <NavItem onClick={this.handleLogout}>Logout</NavItem>
                <LinkContainer to="/browse"><NavItem>Browse</NavItem></LinkContainer>
+               <LinkContainer to="/create_spot"><NavItem>Create Spot</NavItem></LinkContainer>
               </Fragment>
              :
               <Fragment>
@@ -57,7 +58,7 @@ class App extends Component {
                  <NavItem>Login</NavItem>
                 </LinkContainer>
               </Fragment>
-            }   
+            }
             </Nav>
           </Navbar.Collapse>
         </Navbar>
