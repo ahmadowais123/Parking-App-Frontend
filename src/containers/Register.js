@@ -13,6 +13,7 @@ export default class Login extends Component {
     super(props);
 
     this.state = {
+      error: "",
       firstName: "",
       lastName: "",
       email: "",
@@ -81,8 +82,11 @@ export default class Login extends Component {
       },
       headers: headers
     })
-   
-
+    .catch(e => {
+      var errorMsg = e.response.data
+      this.setState({error: errorMsg})
+    })
+  
   }
 
   render() {
@@ -90,6 +94,13 @@ export default class Login extends Component {
     return (
       <p className="Login">
         <form onSubmit={this.handleSubmit}>
+        <FormGroup>
+            <div style={{"color": "red"}}>
+              <p>
+                {this.state.error}
+              </p>
+            </div>
+        </FormGroup>
         <FormGroup controlId="firstName" bsSize="medium">
             <ControlLabel>First Name</ControlLabel>
             <FormControl
