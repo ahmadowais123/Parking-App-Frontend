@@ -117,57 +117,6 @@ export default class Register extends Component {
         this.setState({error: errorMsg})
     });
 
-    // axios({
-    //   method: 'post',
-    //   url: 'https://parking-system-ecse428.herokuapp.com/user',
-    //   data: {
-    //     firstName: usrf,
-    //     lastName: usrl,
-    //     id: usrn,
-    //     password: pass,
-    //     email: mail,
-    //     isRenter: renter,
-    //     isSeller: seller,
-    //     parkingManager:
-    //     {
-    //       pkey: "1"
-    //     }
-    //   },
-    //   headers: headers
-    // }).then((function (response){
-    //     if(response.status == 200){
-    //         var email = mail;
-    //         var password = pass;
-    //         var header = email + ":" + password;
-    //         var base64 = require('base-64');
-    //         header = base64.encode(header);
-    //
-    //         var headers = {
-    //             'Authorization': 'Basic ' + header,
-    //             'Method': 'email',
-    //             'Content-Type': 'application/json',
-    //             'Access-Control-Allow-Origin': '*'
-    //         };
-    //
-    //         var data = {};
-    //         var self = this;
-    //         axios.post('/user/authenticate', data, {headers: headers} )
-    //             .then((function (response){
-    //                 if(response.status == 200){
-    //                     localStorage.setItem('myData', JSON.stringify(response.data));
-    //                     self.props.history.push("/browse");
-    //                 }
-    //             })).catch(function (error){
-    //             console.log(error.response);
-    //             console.log('Failed');
-    //         });
-    //     }
-    // }))
-    // .catch(e => {
-    //   var errorMsg = e.response.data;
-    //   this.setState({error: errorMsg})
-    // })
-
   };
 
   render() {
