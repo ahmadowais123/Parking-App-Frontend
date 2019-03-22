@@ -19,12 +19,12 @@ class App extends Component {
   userHasAuthenticated = (authenticated) => {
     console.log("in authenticated func");
     this.setState({ isAuthenticated: authenticated });
-  }
+  };
 
   handleLogout = async event => {
     this.userHasAuthenticated(false);
     this.props.history.push("/home");
-  }
+  };
 
   render() {
     const childProps = {

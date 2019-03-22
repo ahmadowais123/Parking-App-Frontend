@@ -31,9 +31,9 @@ export default class Login extends Component {
       'Method': 'email',
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*'
-    }
+    };
 
-    var data = {}
+    var data = {};
 
     var self = this;
     axios.post('/user/authenticate', data, {headers: headers} )
@@ -50,7 +50,7 @@ export default class Login extends Component {
 
       
 
-  }
+  };
 
 
   //changes appropriate state variables for whatever is typed into the fields
@@ -58,12 +58,12 @@ export default class Login extends Component {
     this.setState({
       [event.target.id]: event.target.value
     });
-  }
+  };
 
   //suppresses the browser's default action on button press (for now at least)
   handleSubmit = event => {
     event.preventDefault();
-  }
+  };
 
   render() {
     return (
