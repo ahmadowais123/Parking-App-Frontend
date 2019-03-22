@@ -15,7 +15,7 @@ export default class Browse extends Component{
 
     onChange = startDate => this.setState({startDate})
     onChangeEnd = endDate => this.setState({endDate})
-   
+
 
     //changes appropriate state variables for whatever is typed into the fields
     handleChange = event => {
@@ -30,7 +30,7 @@ export default class Browse extends Component{
         return date2;
     }
 
-    
+
 
     async componentDidMount(){
        const url = "https://parking-system-ecse428.herokuapp.com/spot/all";
@@ -41,12 +41,12 @@ export default class Browse extends Component{
        this.setState({spot: data, loading: false})
        console.log(this.state.spot)
     }
-    
+
     displayAds= event => {
         var values = [];
         var keys = Object.keys(localStorage);
         var i = keys.length;
-    
+
         while ( i-- ) {
           values.push( localStorage.getItem(keys[i]) );
         }
@@ -61,11 +61,11 @@ export default class Browse extends Component{
         var user = {
             "pkey" : "19",
             "plate" : "kkk k8h",
-            "startDate" : startDateString, 
-            "endDate" : endDateString, 
-            "pricePaid" : "2", 
-            "startTime" : "5", 
-            "endTime" : "10", 
+            "startDate" : startDateString,
+            "endDate" : endDateString,
+            "pricePaid" : "2",
+            "startTime" : "5",
+            "endTime" : "10",
             "user" : {
                 "firstName" : localStorage.getItem('first_name'), //retrieve from local storage
                 "lastName" : localStorage.getItem('last_name'),
@@ -73,8 +73,8 @@ export default class Browse extends Component{
                 "password" : "scrum",
                 "email" : localStorage.getItem('email'),
                 "isRenter" : "true",
-                "isSeller" : "false", 
-                "parkingManager" : 
+                "isSeller" : "false",
+                "parkingManager" :
                 {
                     "pkey" : "1"
                 }
@@ -89,7 +89,7 @@ export default class Browse extends Component{
                 "postalCode" : "H2H 2H2",
                 "avgRating" : "5.4",
                 "currentPrice" : "99",
-                "user" : 
+                "user" :
                 {
                     "firstName" : "Antoine",
                     "lastName" : "Hamasaki-Belanger",
@@ -97,49 +97,52 @@ export default class Browse extends Component{
                     "password" : "123",
                     "email" : "heybigboy17@gmail.com",
                     "isRenter" : "true",
-                    "isSeller" : "false", 
-                    "parkingManager" : 
+                    "isSeller" : "false",
+                    "parkingManager" :
                     {
                         "pkey" : "1"
                     }
                 },
-                "parkingManager" : 
+                "parkingManager" :
                 {
                     "pkey" : "1"
                 }
             }
         }
-        
-        
 
-        
+
+
+
         var headers = {
             'Content-Type': 'application/json',
             'Access-Control-Allow-Origin': '*'
         }
 
-      
+
           axios({
             method: 'post',
             url: 'https://parking-system-ecse428.herokuapp.com/reservation',
             data: user,
             headers: headers
           })
-          
-      
+
+
     }
-    
+
     divStyle = {
         backgroundColor: '#A9A8E8',
         borderStyle: 'solid',
         margin: '10px'
     }
 
-    // calendarStyle = {
-    //     display: 'inline-block'
-    // }
+    calendarStyle = {
+        display: 'inline-block',
+        margin: '20px'
+    }
 
-
+    rowStyle = {
+      textAlign: 'center'
+    }
     render(){
         if(this.state.loading){
             return (
@@ -149,26 +152,27 @@ export default class Browse extends Component{
         else{
             const list =  this.state.spot.map((todo, index) => (
                 <div key={index}>
-                    
+
                     <div >
                         <div style={this.divStyle}>
                             <h3>Parking  {todo.pkey}   </h3>
-                            <hr></hr> 
+                            <hr></hr>
                             <p>Address: {todo.street_Number} {todo.steet_Name}</p>
-                            <p>Postal Code: {todo.postal_Code }</p> 
-                            <p>Price: {todo.current_Price}</p>     
-                            <p>Rating: {todo.avg_Rating}</p>  
-                            <button onClick={this.displayAds}>Reserve</button> 
+                            <p>Postal Code: {todo.postal_Code }</p>
+                            <p>Price: {todo.current_Price}</p>
+                            <p>Rating: {todo.avg_Rating}</p>
+                            <button onClick={this.displayAds}>Reserve</button>
                         </div>
                     </div>
                 </div>
             ))
-            
+
 
             return (
-                
+
                 <div>
-                    <div>
+                    <div style={this.rowStyle}>
+                    <div style={this.calendarStyle}>
                         <h2>Start Date</h2>
                             <Calendar
                             onChange={this.onChange}
@@ -176,22 +180,21 @@ export default class Browse extends Component{
                             />
                     </div>
 
-                    <div>
+                    <div style={this.calendarStyle}>
                     <h2>End Date</h2>
                             <Calendar
                             onChange={this.onChangeEnd}
                             value={this.state.endDate}
                             />
                     </div>
-
-                    {list}
-
                 </div>
-                
+                    {list}
+                </div>
+
             )
-            
+
         }
-        
-       
+
+
     }
 }
