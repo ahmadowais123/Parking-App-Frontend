@@ -97,7 +97,7 @@ export default class Register extends Component {
                 };
 
                 var data = {};
-                axios.post('/user/authenticate', data, {headers: headers} )
+                axios.post("https://parking-system-ecse428.herokuapp.com/user/authenticate", data, {headers: headers} )
                     .then((function (response){
                         if(response.status == 200){
                             self.props.userHasAuthenticated(true);
