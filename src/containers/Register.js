@@ -8,11 +8,12 @@ import {validateEmail} from "./Helpers.js";
 
 
 
-export default class Register extends Component {
+export default class Login extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      error: "",
       firstName: "",
       lastName: "",
       email: "",
@@ -26,7 +27,7 @@ export default class Register extends Component {
   validateForm() {
     return validateEmail(this.state.email) && this.state.password.length > 0 && 
     this.state.firstName.length > 0 && this.state.lastName.length > 0 &&
-    this.state.password === this.state.password2 && this.state.role !=null;
+    this.state.password === this.state.password2 && this.state.role != null;
   }
 
   handleChange = event => {
@@ -63,25 +64,43 @@ export default class Register extends Component {
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*'}
 
-    var data = {
-      firstName: usrf,
-      lastName: usrl,
-      id: "430",
-      password: pass,
-      email: mail,
-      isRenter: "true",
-      isSeller: "false", 
-      parkingManager: 
-    {
-      pkey: "1"
-    }
-  };  
-  axios.post('/user', data, headers );
+    axios({
+      method: 'post',
+      url: 'https://parking-system-ecse428.herokuapp.com/user',
+      data: {
+        firstName: usrf,
+        lastName: usrl,
+        id: usrn,
+        password: pass,
+        email: mail,
+        isRenter: renter,
+        isSeller: seller, 
+        parkingManager: 
+        {
+          pkey: "1"
+        }
+      },
+      headers: headers
+    })
+    .catch(e => {
+      var errorMsg = e.response.data
+      this.setState({error: errorMsg})
+    })
+  
   }
+
   render() {
+
     return (
       <p className="Login">
         <form onSubmit={this.handleSubmit}>
+        <FormGroup>
+            <div style={{"color": "red"}}>
+              <p>
+                {this.state.error}
+              </p>
+            </div>
+        </FormGroup>
         <FormGroup controlId="firstName" bsSize="medium">
             <ControlLabel>First Name</ControlLabel>
             <FormControl
