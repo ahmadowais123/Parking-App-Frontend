@@ -69,7 +69,6 @@ export default class Create_spot extends Component{
     var headers = {
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*'}
-
       axios.post('https://parking-system-ecse428.herokuapp.com/spot', data, headers );
 
   }
