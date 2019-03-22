@@ -102,6 +102,7 @@ export default class Register extends Component {
                         if(response.status == 200){
                             self.props.userHasAuthenticated(true);
                             localStorage.setItem('myData', JSON.stringify(response.data));
+                            localStorage.setItem('loginStatus', 'true')
                             self.props.history.push("/browse");
                         }
                     })).catch(function (error){
