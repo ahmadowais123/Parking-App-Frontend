@@ -41,7 +41,6 @@ export default class Create_spot extends Component{
     console.log(String(user.last_Name))
 
     const data = {
-      "pkey" : String(this.state.pkey),
       "addressNumber" : String(this.state.addressNumber),
       "streetName" : String(this.state.streetName),
       "postalCode" : String(this.state.postalCode),
@@ -119,15 +118,6 @@ export default class Create_spot extends Component{
       <FormControl
       autoFocus
       value={this.state.avgRating}
-      onChange={this.handleChange}
-      />
-      </FormGroup>
-
-      <FormGroup controlId="pkey" bsSize="small">
-      <ControlLabel>ID (3 digit number)</ControlLabel>
-      <FormControl
-      autoFocus
-      value={this.state.pkey}
       onChange={this.handleChange}
       />
       </FormGroup>
