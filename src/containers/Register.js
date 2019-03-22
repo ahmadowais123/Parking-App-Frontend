@@ -47,18 +47,18 @@ export default class Register extends Component {
     var pass = this.state.password;
     var mail = this.state.email;
     var usrn = this.state.username;
-    var renter = false;
-    var seller = false;
+    var renter = true;
+    var seller = true;
     
-    if (this.state.role === "Renter"){
-      renter = true;
-      seller = false;
-    }
+    // if (this.state.role === "Renter"){
+    //   renter = true;
+    //   seller = false;
+    // }
 
-    else if (this.state.role === "Seller"){
-      renter = false;
-      seller = true;
-    }
+    // else if (this.state.role === "Seller"){
+    //   renter = false;
+    //   seller = true;
+    // }
 
     var headers1 = {
       'Content-Type': 'application/json',
@@ -158,7 +158,7 @@ export default class Register extends Component {
               onChange={this.handleChange}
             />
           </FormGroup>
-          <FormGroup controlId="role" bsSize="medium">
+          {/* <FormGroup controlId="role" bsSize="medium">
               <ControlLabel>Role</ControlLabel><br/>
               <select value={this.state.role}  onChange={this.handleChange} id="role">
                   <option value="Renter">Renter</option>
@@ -166,7 +166,7 @@ export default class Register extends Component {
               </select>
               <p></p>
               <p>{this.state.value}</p>
-          </FormGroup>
+          </FormGroup> */}
           <FormGroup controlId="username" bsSize="medium">
             <ControlLabel>Username</ControlLabel>
             <FormControl
