@@ -23,6 +23,7 @@ class App extends Component {
 
   handleLogout = async event => {
     this.userHasAuthenticated(false);
+    localStorage.setItem('loginStatus', 'false');
     this.props.history.push("/home");
   };
 
@@ -42,7 +43,7 @@ class App extends Component {
           </Navbar.Header>
           <Navbar.Collapse>
             <Nav pullRight>
-            {this.state.isAuthenticated
+            {localStorage.getItem('loginStatus') === 'true'
              ?
              <Fragment>
               <NavItem onClick={this.handleLogout}>Logout</NavItem>
