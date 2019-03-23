@@ -42,7 +42,7 @@ export default class Browse extends Component{
        console.log(this.state.spot)
     }
 
-    displayAds= event => {
+    displayAds = (todo, event) => {
         var values = [];
         var keys = Object.keys(localStorage);
         var i = keys.length;
@@ -50,6 +50,7 @@ export default class Browse extends Component{
         while ( i-- ) {
           values.push( localStorage.getItem(keys[i]) );
         }
+        
         const userR = JSON.parse(values[0]);
 
 
@@ -57,23 +58,22 @@ export default class Browse extends Component{
         console.log(startDateString);
         var endDateString = this.formatDate(this.state.endDate);
         console.log(endDateString);
-
+        console.log(todo)
         var user = {
-            "pkey" : "19",
             "plate" : "kkk k8h",
             "startDate" : startDateString,
             "endDate" : endDateString,
-            "pricePaid" : "2",
-            "startTime" : "5",
-            "endTime" : "10",
+            "pricePaid" : todo.current_Price,
+            "startTime" : "0",
+            "endTime" : "24",
             "user" : {
                 "firstName" : localStorage.getItem('first_name'), //retrieve from local storage
                 "lastName" : localStorage.getItem('last_name'),
-                "id" : "1",
-                "password" : "scrum",
+                "id" : String(userR.userID),
+                "password" : String(userR.password),
                 "email" : localStorage.getItem('email'),
                 "isRenter" : "true",
-                "isSeller" : "false",
+                "isSeller" : "true",
                 "parkingManager" :
                 {
                     "pkey" : "1"
@@ -83,12 +83,12 @@ export default class Browse extends Component{
                 "pkey" : "1"
             },
             "spot" : {
-                "pkey" : "778",
-                "addressNumber" : "9988",
-                "streetName" : "Final",
-                "postalCode" : "H2H 2H2",
-                "avgRating" : "5.4",
-                "currentPrice" : "99",
+                "pkey" : todo.pkey,
+                "addressNumber" : todo.street_Number,
+                "streetName" : todo.steet_Name,
+                "postalCode" : todo.postal_Code ,
+                "avgRating" : todo.avg_Rating,
+                "currentPrice" : todo.current_Price,
                 "user" :
                 {
                     "firstName" : "Antoine",
@@ -151,17 +151,17 @@ export default class Browse extends Component{
         }
         else{
             const list =  this.state.spot.map((todo, index) => (
-                <div key={index}>
+                <div id={index}>
 
                     <div >
                         <div style={this.divStyle}>
                             <h3>Parking  {todo.pkey}   </h3>
                             <hr></hr>
-                            <p>Address: {todo.street_Number} {todo.steet_Name}</p>
+                            <p>Address: {todo.street_Number} {todo.street_Name}</p>
                             <p>Postal Code: {todo.postal_Code }</p>
                             <p>Price: {todo.current_Price}</p>
                             <p>Rating: {todo.avg_Rating}</p>
-                            <button onClick={this.displayAds}>Reserve</button>
+                            <button onClick={(event) => this.displayAds(todo, event)}>Reserve</button>
                         </div>
                     </div>
                 </div>
