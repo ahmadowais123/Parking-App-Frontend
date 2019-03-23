@@ -6,15 +6,15 @@ import axios from 'axios';
 export default class Browse extends Component{
 
     state = {
-        loading: true,
-        spot: null,
+        loading: false,
+        spot: [],
         startDate: new Date(),
         endDate: new Date()
     };
 
 
-    onChange = startDate => this.setState({startDate})
-    onChangeEnd = endDate => this.setState({endDate})
+    onChange = startDate => this.setState({startDate});
+    onChangeEnd = endDate => this.setState({endDate});
 
 
     //changes appropriate state variables for whatever is typed into the fields
@@ -22,29 +22,42 @@ export default class Browse extends Component{
         this.setState({
         [event.target.id]: event.target.value
         });
-    }
+    };
 
 
     formatDate = (date) => {
         var date2 = date.toISOString().substr(0, 19).replace('T', ' ');
         return date2;
-    }
+    };
 
 
 
-    async componentDidMount(){
-       let url = "https://parking-system-ecse428.herokuapp.com/spot/getFreeSpots";
-       var startDate = this.formatDate(this.state.startDate);
-       var endDate = this.formatDate(this.state.endDate);
-       url += "?startDate=" + startDate + "&endDate=" + endDate; 
+    // async componentDidMount(){
+    //    let url = "https://parking-system-ecse428.herokuapp.com/spot/getFreeSpots";
+    //    var startDate = this.formatDate(this.state.startDate);
+    //    var endDate = this.formatDate(this.state.endDate);
+    //    url += "?startDate=" + startDate + "&endDate=" + endDate;
+    //
+    //    const response = await fetch(url);
+    //    var data = await response.json();
+    //    data = JSON.parse(JSON.stringify(data));
+    //    console.log(data)
+    //    this.setState({spot: data, loading: false})
+    //    console.log(this.state.spot)
+    // }
 
-       const response = await fetch(url);
-       var data = await response.json();
-       data = JSON.parse(JSON.stringify(data));
-       console.log(data)
-       this.setState({spot: data, loading: false})
-       console.log(this.state.spot)
-    }
+    displayAds = (event) => {
+           let url = "https://parking-system-ecse428.herokuapp.com/spot/getFreeSpots";
+           var startDate = this.formatDate(this.state.startDate);
+           var endDate = this.formatDate(this.state.endDate);
+           url += "?startDate=" + startDate + "&endDate=" + endDate;
+
+           //const response = fetch(url);
+           axios.get(url).then((response) => {
+               this.setState({spot: response.data});
+               console.log(response);
+           });
+    };
 
     reserve = (todo, event) => {
         var values = [];
@@ -61,7 +74,7 @@ export default class Browse extends Component{
         var owner;
         var data = {
             "pKey": todo.pKey
-        }
+        };
         // axios.get("https://parking-system-ecse428.herokuapp.com/reservation")
         // .then((function (response){
         //     if(response.status == 200){
@@ -123,7 +136,7 @@ export default class Browse extends Component{
                     "pkey" : "1"
                 }
             }
-        }
+        };
 
 
 
@@ -131,9 +144,9 @@ export default class Browse extends Component{
         var headers = {
             'Content-Type': 'application/json',
             'Access-Control-Allow-Origin': '*'
-        }
+        };
 
-        let self = this
+        let self = this;
           axios({
             method: 'post',
             url: 'https://parking-system-ecse428.herokuapp.com/reservation',
@@ -152,26 +165,26 @@ export default class Browse extends Component{
          });
 
 
-    }
+    };
 
     divStyle = {
         backgroundColor: '#A9A8E8',
         borderStyle: 'solid',
         margin: '10px'
-    }
+    };
 
     calendarStyle = {
         display: 'inline-block',
         margin: '20px'
-    }
+    };
 
     rowStyle = {
       textAlign: 'center'
-    }
+    };
 
     buttonStyle = {
        // text-align: 
-    }
+    };
 
     render(){
         if(this.state.loading){
@@ -217,8 +230,10 @@ export default class Browse extends Component{
                             />
                     </div>
                 </div>
-                    <button style={this.buttonStyle}>Show Ads</button>
-                    {list}
+                    <button onClick={(event) => this.displayAds(event)} style={this.buttonStyle}>Show Ads</button>
+                    <div>
+                        {list}
+                    </div>
                 </div>
 
             )
