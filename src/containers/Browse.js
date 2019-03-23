@@ -62,12 +62,12 @@ export default class Browse extends Component{
         var data = {
             "pKey": todo.pKey
         }
-        axios.get("https://parking-system-ecse428.herokuapp.com/reservation", data)
-        .then((function (response){
-            if(response.status == 200){
-                owner = response.data;
-            }
-        }))
+        // axios.get("https://parking-system-ecse428.herokuapp.com/reservation")
+        // .then((function (response){
+        //     if(response.status == 200){
+        //         owner = response.data;
+        //     }
+        // }))
 
 
         var startDateString = this.formatDate(this.state.startDate);
@@ -107,13 +107,12 @@ export default class Browse extends Component{
                 "currentPrice" : todo.current_Price,
                 "user" :
                 {
-                    "firstName" : "Antoine",
-                    "lastName" : "Hamasaki-Belanger",
-                    "id" : "430",
-                    "password" : "123",
-                    "email" : "heybigboy17@gmail.com",
+                    "firstName" : "daddy",
+                    "lastName" : "daddy",
+                    "password" : "1",
+                    "email" : "daddy@gmail.com",
                     "isRenter" : "true",
-                    "isSeller" : "false",
+                    "isSeller" : "true",
                     "parkingManager" :
                     {
                         "pkey" : "1"
