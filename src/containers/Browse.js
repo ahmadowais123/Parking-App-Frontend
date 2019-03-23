@@ -8,13 +8,29 @@ export default class Browse extends Component{
     state = {
         loading: false,
         spot: [],
-        startDate: new Date(),
-        endDate: new Date()
+        startDate: null,
+        endDate: null
     };
 
 
-    onChange = startDate => this.setState({startDate});
-    onChangeEnd = endDate => this.setState({endDate});
+    checkDates() {
+        console.log(this.state.startDate);
+        console.log(this.state.endDate);
+        if(this.state.startDate && this.state.endDate) {
+            if(this.state.startDate.getTime() < this.state.endDate.getTime())
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    onChange = (startDate) => {
+        this.setState({startDate});
+    };
+
+    onChangeEnd = (endDate) => {
+        this.setState({endDate});
+    };
 
 
     //changes appropriate state variables for whatever is typed into the fields
@@ -31,28 +47,12 @@ export default class Browse extends Component{
     };
 
 
-
-    // async componentDidMount(){
-    //    let url = "https://parking-system-ecse428.herokuapp.com/spot/getFreeSpots";
-    //    var startDate = this.formatDate(this.state.startDate);
-    //    var endDate = this.formatDate(this.state.endDate);
-    //    url += "?startDate=" + startDate + "&endDate=" + endDate;
-    //
-    //    const response = await fetch(url);
-    //    var data = await response.json();
-    //    data = JSON.parse(JSON.stringify(data));
-    //    console.log(data)
-    //    this.setState({spot: data, loading: false})
-    //    console.log(this.state.spot)
-    // }
-
     displayAds = (event) => {
            let url = "https://parking-system-ecse428.herokuapp.com/spot/getFreeSpots";
            var startDate = this.formatDate(this.state.startDate);
            var endDate = this.formatDate(this.state.endDate);
            url += "?startDate=" + startDate + "&endDate=" + endDate;
 
-           //const response = fetch(url);
            axios.get(url).then((response) => {
                this.setState({spot: response.data});
                console.log(response);
@@ -60,6 +60,7 @@ export default class Browse extends Component{
     };
 
     reserve = (todo, event) => {
+        var self = this;
         var values = [];
         var keys = Object.keys(localStorage);
         var i = keys.length;
@@ -70,101 +71,89 @@ export default class Browse extends Component{
         
         const userR = JSON.parse(values[0]);
 
-        //Get owner of parking spot
-        var owner;
-        var data = {
-            "pKey": todo.pKey
-        };
-        // axios.get("https://parking-system-ecse428.herokuapp.com/reservation")
-        // .then((function (response){
-        //     if(response.status == 200){
-        //         owner = response.data;
-        //     }
-        // }))
-
-
-        var startDateString = this.formatDate(this.state.startDate);
-        console.log(startDateString);
-        var endDateString = this.formatDate(this.state.endDate);
-        console.log(endDateString);
-        console.log(todo)
-        var user = {
-            "plate" : "",
-            "startDate" : startDateString,
-            "endDate" : endDateString,
-            "pricePaid" : todo.current_Price,
-            "startTime" : "0",
-            "endTime" : "24",
-            "user" : {
-                "firstName" : localStorage.getItem('first_name'), //retrieve from local storage
-                "lastName" : localStorage.getItem('last_name'),
-                "id" : String(userR.userID),
-                "password" : String(userR.password),
-                "email" : localStorage.getItem('email'),
-                "isRenter" : "true",
-                "isSeller" : "true",
-                "parkingManager" :
-                {
-                    "pkey" : "1"
-                }
-            },
-            "parkingManager" : {
-                "pkey" : "1"
-            },
-            "spot" : {
-                "pkey" : todo.pkey,
-                "addressNumber" : todo.street_Number,
-                "streetName" : todo.steet_Name,
-                "postalCode" : todo.postal_Code ,
-                "avgRating" : todo.avg_Rating,
-                "currentPrice" : todo.current_Price,
-                "user" :
-                {
-                    "firstName" : "daddy",
-                    "lastName" : "daddy",
-                    "password" : "1",
-                    "email" : "daddy@gmail.com",
-                    "isRenter" : "true",
-                    "isSeller" : "true",
-                    "parkingManager" :
-                    {
-                        "pkey" : "1"
-                    }
-                },
-                "parkingManager" :
-                {
-                    "pkey" : "1"
-                }
-            }
-        };
-
-
-
-
-        var headers = {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*'
-        };
-
-        let self = this;
-          axios({
-            method: 'post',
-            url: 'https://parking-system-ecse428.herokuapp.com/reservation',
-            data: user,
-            headers: headers
-          })
-          .then((function (response){
+        axios.get("https://parking-system-ecse428.herokuapp.com/spot/getOwner/" + todo.pkey)
+        .then((function (response){
             if(response.status == 200){
-             console.log("reserve was success")
-            //call show adds
-            
+                var owner = response.data;
+
+                var startDateString = self.formatDate(self.state.startDate);
+                console.log(startDateString);
+                var endDateString = self.formatDate(self.state.endDate);
+                console.log(endDateString);
+                console.log(todo);
+
+                var requestHeaders = {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*'
+                };
+
+                var reservation = {
+                    plate : "",
+                    startDate : startDateString,
+                    endDate : endDateString,
+                    pricePaid : todo.current_Price,
+                    startTime : "0",
+                    endTime : "24",
+                    user : {
+                        firstName : userR.first_name, //retrieve from local storage
+                        lastName : userR.last_name,
+                        id : userR.userID,
+                        password : userR.password,
+                        email : userR.email,
+                        isRenter : userR.isRenter,
+                        isSeller : userR.isSeller,
+                        parkingManager :
+                            {
+                                pkey : "1"
+                            }
+                    },
+                    parkingManager : {
+                        pkey : "1"
+                    },
+                    spot : {
+                        pkey : todo.pkey,
+                        addressNumber : todo.street_Number,
+                        streetName : todo.street_Name,
+                        postalCode : todo.postal_Code ,
+                        avgRating : todo.avg_Rating,
+                        currentPrice : todo.current_Price,
+                        user :
+                            {
+                                firstName : owner.first_name,
+                                lastName : owner.last_name,
+                                password : owner.password,
+                                email : owner.email,
+                                isRenter : owner.isRenter,
+                                isSeller : owner.isSeller,
+                                parkingManager :
+                                    {
+                                        pkey : "1"
+                                    }
+                            },
+                        parkingManager :
+                            {
+                                pkey: "1"
+                            }
+                    },
+                    headers: requestHeaders
+                };
+
+
+                var reservationUrl = 'https://parking-system-ecse428.herokuapp.com/reservation';
+
+                axios.post(reservationUrl, reservation)
+                    .then((response) => {
+                        if(response.status == 200) {
+                            self.displayAds();
+                            console.log("Reservation created");
+                        }
+                }).catch((error) => {
+                    console.log(error.response);
+                    console.log("Failed");
+                });
+
             }
-         })).catch(function (error){
-           console.log(error.response);
-           console.log('Failed');
-         });
-
-
+        }));
     };
 
     divStyle = {
@@ -207,7 +196,7 @@ export default class Browse extends Component{
                         </div>
                     </div>
                 </div>
-            ))
+            ));
 
 
             return (
@@ -230,7 +219,7 @@ export default class Browse extends Component{
                             />
                     </div>
                 </div>
-                    <button onClick={(event) => this.displayAds(event)} style={this.buttonStyle}>Show Ads</button>
+                    <button disabled={!this.checkDates()} onClick={(event) => this.displayAds(event)} style={this.buttonStyle} >Show Ads</button>
                     <div>
                         {list}
                     </div>
