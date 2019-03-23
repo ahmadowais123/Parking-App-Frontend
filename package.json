@@ -7,13 +7,15 @@
     "axios": "^0.18.0",
     "base-64": "^0.1.0",
     "bootstrap": "^4.1.1",
+    "chromedriver": "^2.46.0",
     "react": "^16.7.0",
     "react-bootstrap": "^0.32.4",
     "react-calendar": "^2.18.1",
     "react-dom": "^16.7.0",
     "react-router-bootstrap": "^0.24.4",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "^2.1.5"
+    "react-scripts": "^2.1.5",
+    "selenium-webdriver": "^4.0.0-alpha.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -29,5 +31,8 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "mocha": "^6.0.2"
+  }
 }

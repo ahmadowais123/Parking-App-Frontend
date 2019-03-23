@@ -68,11 +68,21 @@ describe('Create an advertisement', function () {
         await driver.findElement(By.xpath("//button[contains(.,'Create a parking spot')]")).click();
 
         // Check for advertisement creation success
+
     });
 
     it('A Seller creates an invalid advertisement', async function() {
 
-    }
+    });
+}
+
+describe('Create an advertisement', function () {
+    let driver;
+    before(async function () {
+        driver = await new Builder().forBrowser('chrome').build();
+    });
+
+
 }
 
 /*
