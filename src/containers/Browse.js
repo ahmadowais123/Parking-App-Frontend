@@ -133,13 +133,23 @@ export default class Browse extends Component{
             'Access-Control-Allow-Origin': '*'
         }
 
-
+        let self = this
           axios({
             method: 'post',
             url: 'https://parking-system-ecse428.herokuapp.com/reservation',
             data: user,
             headers: headers
           })
+          .then((function (response){
+            if(response.status == 200){
+             console.log("reserve was success")
+            //call show adds
+            
+            }
+         })).catch(function (error){
+           console.log(error.response);
+           console.log('Failed');
+         });
 
 
     }

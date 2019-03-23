@@ -65,10 +65,19 @@ export default class Create_spot extends Component{
         "pkey" : "1"
       }
     }
+    let self = this
     var headers = {
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*'}
-      axios.post('https://parking-system-ecse428.herokuapp.com/spot', data, headers );
+      axios.post('https://parking-system-ecse428.herokuapp.com/spot', data, headers )
+      .then((function (response){
+        if(response.status == 200){
+         self.props.history.push("/browse");
+        }
+     })).catch(function (error){
+       console.log(error.response);
+       console.log('Failed');
+     });
 
   }
 
