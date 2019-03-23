@@ -6,15 +6,31 @@ import axios from 'axios';
 export default class Browse extends Component{
 
     state = {
-        loading: true,
-        spot: null,
-        startDate: new Date(),
-        endDate: new Date()
+        loading: false,
+        spot: [],
+        startDate: null,
+        endDate: null
     };
 
 
-    onChange = startDate => this.setState({startDate})
-    onChangeEnd = endDate => this.setState({endDate})
+    checkDates() {
+        console.log(this.state.startDate);
+        console.log(this.state.endDate);
+        if(this.state.startDate && this.state.endDate) {
+            if(this.state.startDate.getTime() < this.state.endDate.getTime())
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    onChange = (startDate) => {
+        this.setState({startDate});
+    };
+
+    onChangeEnd = (endDate) => {
+        this.setState({endDate});
+    };
 
 
     //changes appropriate state variables for whatever is typed into the fields
@@ -22,27 +38,29 @@ export default class Browse extends Component{
         this.setState({
         [event.target.id]: event.target.value
         });
-    }
+    };
 
 
     formatDate = (date) => {
         var date2 = date.toISOString().substr(0, 19).replace('T', ' ');
         return date2;
-    }
+    };
 
 
+    displayAds = (event) => {
+           let url = "https://parking-system-ecse428.herokuapp.com/spot/getFreeSpots";
+           var startDate = this.formatDate(this.state.startDate);
+           var endDate = this.formatDate(this.state.endDate);
+           url += "?startDate=" + startDate + "&endDate=" + endDate;
 
-    async componentDidMount(){
-       const url = "https://parking-system-ecse428.herokuapp.com/spot/all";
-       const response = await fetch(url);
-       var data = await response.json();
-       data = JSON.parse(JSON.stringify(data));
-       console.log(data)
-       this.setState({spot: data, loading: false})
-       console.log(this.state.spot)
-    }
+           axios.get(url).then((response) => {
+               this.setState({spot: response.data});
+               console.log(response);
+           });
+    };
 
-    displayAds= event => {
+    reserve = (todo, event) => {
+        var self = this;
         var values = [];
         var keys = Object.keys(localStorage);
         var i = keys.length;
@@ -50,99 +68,113 @@ export default class Browse extends Component{
         while ( i-- ) {
           values.push( localStorage.getItem(keys[i]) );
         }
+        
         const userR = JSON.parse(values[0]);
 
+        axios.get("https://parking-system-ecse428.herokuapp.com/spot/getOwner/" + todo.pkey)
+        .then((function (response){
+            if(response.status == 200){
+                var owner = response.data;
 
-        var startDateString = this.formatDate(this.state.startDate);
-        console.log(startDateString);
-        var endDateString = this.formatDate(this.state.endDate);
-        console.log(endDateString);
+                var startDateString = self.formatDate(self.state.startDate);
+                console.log(startDateString);
+                var endDateString = self.formatDate(self.state.endDate);
+                console.log(endDateString);
+                console.log(todo);
 
-        var user = {
-            "pkey" : "19",
-            "plate" : "kkk k8h",
-            "startDate" : startDateString,
-            "endDate" : endDateString,
-            "pricePaid" : "2",
-            "startTime" : "5",
-            "endTime" : "10",
-            "user" : {
-                "firstName" : localStorage.getItem('first_name'), //retrieve from local storage
-                "lastName" : localStorage.getItem('last_name'),
-                "id" : "1",
-                "password" : "scrum",
-                "email" : localStorage.getItem('email'),
-                "isRenter" : "true",
-                "isSeller" : "false",
-                "parkingManager" :
-                {
-                    "pkey" : "1"
-                }
-            },
-            "parkingManager" : {
-                "pkey" : "1"
-            },
-            "spot" : {
-                "pkey" : "778",
-                "addressNumber" : "9988",
-                "streetName" : "Final",
-                "postalCode" : "H2H 2H2",
-                "avgRating" : "5.4",
-                "currentPrice" : "99",
-                "user" :
-                {
-                    "firstName" : "Antoine",
-                    "lastName" : "Hamasaki-Belanger",
-                    "id" : "430",
-                    "password" : "123",
-                    "email" : "heybigboy17@gmail.com",
-                    "isRenter" : "true",
-                    "isSeller" : "false",
-                    "parkingManager" :
-                    {
-                        "pkey" : "1"
-                    }
-                },
-                "parkingManager" :
-                {
-                    "pkey" : "1"
-                }
+                var requestHeaders = {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*'
+                };
+
+                var reservation = {
+                    plate : "",
+                    startDate : startDateString,
+                    endDate : endDateString,
+                    pricePaid : todo.current_Price,
+                    startTime : "0",
+                    endTime : "24",
+                    user : {
+                        firstName : userR.first_name, //retrieve from local storage
+                        lastName : userR.last_name,
+                        id : userR.userID,
+                        password : userR.password,
+                        email : userR.email,
+                        isRenter : userR.isRenter,
+                        isSeller : userR.isSeller,
+                        parkingManager :
+                            {
+                                pkey : "1"
+                            }
+                    },
+                    parkingManager : {
+                        pkey : "1"
+                    },
+                    spot : {
+                        pkey : todo.pkey,
+                        addressNumber : todo.street_Number,
+                        streetName : todo.street_Name,
+                        postalCode : todo.postal_Code ,
+                        avgRating : todo.avg_Rating,
+                        currentPrice : todo.current_Price,
+                        user :
+                            {
+                                firstName : owner.first_name,
+                                lastName : owner.last_name,
+                                password : owner.password,
+                                email : owner.email,
+                                isRenter : owner.isRenter,
+                                isSeller : owner.isSeller,
+                                parkingManager :
+                                    {
+                                        pkey : "1"
+                                    }
+                            },
+                        parkingManager :
+                            {
+                                pkey: "1"
+                            }
+                    },
+                    headers: requestHeaders
+                };
+
+
+                var reservationUrl = 'https://parking-system-ecse428.herokuapp.com/reservation';
+
+                axios.post(reservationUrl, reservation)
+                    .then((response) => {
+                        if(response.status == 200) {
+                            self.displayAds();
+                            console.log("Reservation created");
+                        }
+                }).catch((error) => {
+                    console.log(error.response);
+                    console.log("Failed");
+                });
+
             }
-        }
-
-
-
-
-        var headers = {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*'
-        }
-
-
-          axios({
-            method: 'post',
-            url: 'https://parking-system-ecse428.herokuapp.com/reservation',
-            data: user,
-            headers: headers
-          })
-
-
-    }
+        }));
+    };
 
     divStyle = {
         backgroundColor: '#A9A8E8',
         borderStyle: 'solid',
         margin: '10px'
-    }
+    };
 
     calendarStyle = {
         display: 'inline-block',
         margin: '20px'
-    }
+    };
 
     rowStyle = {
       textAlign: 'center'
-    }
+    };
+
+    buttonStyle = {
+       // text-align: 
+    };
+
     render(){
         if(this.state.loading){
             return (
@@ -151,21 +183,20 @@ export default class Browse extends Component{
         }
         else{
             const list =  this.state.spot.map((todo, index) => (
-                <div key={index}>
-
+                <div id={index}>
                     <div >
                         <div style={this.divStyle}>
                             <h3>Parking  {todo.pkey}   </h3>
                             <hr></hr>
-                            <p>Address: {todo.street_Number} {todo.steet_Name}</p>
+                            <p>Address: {todo.street_Number} {todo.street_Name}</p>
                             <p>Postal Code: {todo.postal_Code }</p>
                             <p>Price: {todo.current_Price}</p>
                             <p>Rating: {todo.avg_Rating}</p>
-                            <button onClick={this.displayAds}>Reserve</button>
+                            <button onClick={(event) => this.reserve(todo, event)}>Reserve</button>
                         </div>
                     </div>
                 </div>
-            ))
+            ));
 
 
             return (
@@ -188,7 +219,10 @@ export default class Browse extends Component{
                             />
                     </div>
                 </div>
-                    {list}
+                    <button disabled={!this.checkDates()} onClick={(event) => this.displayAds(event)} style={this.buttonStyle} >Show Ads</button>
+                    <div>
+                        {list}
+                    </div>
                 </div>
 
             )
