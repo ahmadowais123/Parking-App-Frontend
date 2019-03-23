@@ -33,7 +33,11 @@ export default class Browse extends Component{
 
 
     async componentDidMount(){
-       const url = "https://parking-system-ecse428.herokuapp.com/spot/all";
+       let url = "https://parking-system-ecse428.herokuapp.com/spot/getFreeSpots";
+       var startDate = this.formatDate(this.state.startDate);
+       var endDate = this.formatDate(this.state.endDate);
+       url += "?startDate=" + startDate + "&endDate=" + endDate; 
+
        const response = await fetch(url);
        var data = await response.json();
        data = JSON.parse(JSON.stringify(data));
@@ -42,7 +46,7 @@ export default class Browse extends Component{
        console.log(this.state.spot)
     }
 
-    displayAds = (todo, event) => {
+    reserve = (todo, event) => {
         var values = [];
         var keys = Object.keys(localStorage);
         var i = keys.length;
@@ -53,6 +57,18 @@ export default class Browse extends Component{
         
         const userR = JSON.parse(values[0]);
 
+        //Get owner of parking spot
+        var owner;
+        var data = {
+            "pKey": todo.pKey
+        }
+        axios.get("https://parking-system-ecse428.herokuapp.com/reservation", data)
+        .then((function (response){
+            if(response.status == 200){
+                owner = response.data;
+            }
+        }))
+
 
         var startDateString = this.formatDate(this.state.startDate);
         console.log(startDateString);
@@ -60,7 +76,7 @@ export default class Browse extends Component{
         console.log(endDateString);
         console.log(todo)
         var user = {
-            "plate" : "kkk k8h",
+            "plate" : "",
             "startDate" : startDateString,
             "endDate" : endDateString,
             "pricePaid" : todo.current_Price,
@@ -143,6 +159,11 @@ export default class Browse extends Component{
     rowStyle = {
       textAlign: 'center'
     }
+
+    buttonStyle = {
+       // text-align: 
+    }
+
     render(){
         if(this.state.loading){
             return (
@@ -152,7 +173,6 @@ export default class Browse extends Component{
         else{
             const list =  this.state.spot.map((todo, index) => (
                 <div id={index}>
-
                     <div >
                         <div style={this.divStyle}>
                             <h3>Parking  {todo.pkey}   </h3>
@@ -161,7 +181,7 @@ export default class Browse extends Component{
                             <p>Postal Code: {todo.postal_Code }</p>
                             <p>Price: {todo.current_Price}</p>
                             <p>Rating: {todo.avg_Rating}</p>
-                            <button onClick={(event) => this.displayAds(todo, event)}>Reserve</button>
+                            <button onClick={(event) => this.reserve(todo, event)}>Reserve</button>
                         </div>
                     </div>
                 </div>
@@ -188,6 +208,7 @@ export default class Browse extends Component{
                             />
                     </div>
                 </div>
+                    <button style={this.buttonStyle}>Show Ads</button>
                     {list}
                 </div>
 
