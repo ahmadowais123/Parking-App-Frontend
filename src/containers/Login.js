@@ -45,6 +45,7 @@ export default class Login extends Component {
           self.props.history.push("/browse");
          }
       })).catch(function (error){
+        alert('Invalid login credentials')
         console.log(error.response);
         console.log('Failed');
       });

@@ -186,7 +186,7 @@ export default class Browse extends Component{
                 <div id={index}>
                     <div >
                         <div style={this.divStyle}>
-                            <h3>Parking  {todo.pkey}   </h3>
+                            <h3>Parking  {index+1}   </h3>
                             <hr></hr>
                             <p>Address: {todo.street_Number} {todo.street_Name}</p>
                             <p>Postal Code: {todo.postal_Code }</p>

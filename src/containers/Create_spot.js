@@ -21,6 +21,54 @@ export default class Create_spot extends Component{
     });
   }
 
+  validateForm() {
+
+    var PCregex = new RegExp(/([ABCEGHJKLMNPRSTVXY]\d)([ABCEGHJKLMNPRSTVWXYZ]\d){2}/i);
+
+    if(this.state.streetName.length === 0){
+      alert('The street name field cannot be empty')
+      return(false)
+    }
+
+    if(this.state.addressNumber.length !== 0){
+      if(isNaN(this.state.addressNumber)){
+        alert('The address number field must contain a number')
+        return(false)
+      }
+    } else{
+      alert('The address number field cannot be empty')
+      return(false)
+    }
+
+    if(this.state.postalCode.length === 0){
+      alert('The postal code field cannot be empty')
+      return(false)
+    }
+
+    if(this.state.currentPrice.length !== 0){
+      if(isNaN(this.state.currentPrice)){
+        alert('The price field must contain a number')
+        return(false)
+      }
+    } else {
+      alert('The price field cannot be empty')
+      return(false)
+    }
+
+    if(this.state.avgRating.length !== 0){
+      if(isNaN(this.state.avgRating)){
+        alert('The average rating field must contain a number')
+        return(false)
+      }
+    } else {
+      alert('The average rating field cannot be empty')
+      return(false)
+    }
+
+    return true
+
+  }
+
   test = () => {
     console.log(this.state)
   }
@@ -39,6 +87,10 @@ export default class Create_spot extends Component{
 
     console.log(user)
     console.log(String(user.last_Name))
+
+    if(!this.validateForm()){
+      return false;
+    }
 
     const data = {
       "addressNumber" : String(this.state.addressNumber),
