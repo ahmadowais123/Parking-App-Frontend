@@ -78,7 +78,7 @@ export default class myReservations extends Component{
                       }))
 
           } else {
-            swal("Your imaginary file is safe!");
+            swal("You did not cancel your reservation.");
           }
         });
     }
