@@ -61,7 +61,7 @@ export default class myReservations extends Component{
           title: "Are you sure?",
           text: "You are about to cancel your reservation for the parking spot on " + todo.parkingSpot.street_Number + " " + todo.parkingSpot.street_Name + "!",
           icon: "warning",
-          buttons: true,
+          buttons: ["Don't cancel", "Cancel Reservation!"],
           dangerMode: true,
         })
         .then((willDelete) => {
@@ -75,7 +75,13 @@ export default class myReservations extends Component{
                               self.updateReservations();
 
                           }
-                      }))
+                      })).catch(function (error){
+                          swal("Oops something went wrong! You may want to contact the development team.", {
+                              icon: "error",
+                       });
+                       console.log(error.response);
+                       console.log('Failed');
+                      });
 
           } else {
             swal("You did not cancel your reservation.");
