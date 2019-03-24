@@ -7,11 +7,11 @@ export default class Home extends Component {
   missionStyle = {
     width: '500px',
     height: '500px'
-  }
+  };
   howStyle = {
     width: '50%',
     height: '50%'
-  }
+  };
   render() {
     return (
       <div className="Home">

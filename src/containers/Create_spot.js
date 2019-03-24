@@ -12,7 +12,7 @@ export default class Create_spot extends Component{
     postalCode : "",
     avgRating : "",
     currentPrice : ""
-  }
+  };
 
 
   //changes appropriate state variables for whatever is typed into the fields
@@ -20,49 +20,49 @@ export default class Create_spot extends Component{
     this.setState({
       [event.target.id]: event.target.value
     });
-  }
+  };
 
   validateForm() {
 
     var PCregex = new RegExp(/([ABCEGHJKLMNPRSTVXY]\d)([ABCEGHJKLMNPRSTVWXYZ]\d){2}/i);
 
     if(this.state.streetName.length === 0){
-      alert('The street name field cannot be empty')
+      alert('The street name field cannot be empty');
       return(false)
     }
 
     if(this.state.addressNumber.length !== 0){
       if(isNaN(this.state.addressNumber)){
-        alert('The address number field must contain a number')
+        alert('The address number field must contain a number');
         return(false)
       }
     } else{
-      alert('The address number field cannot be empty')
+      alert('The address number field cannot be empty');
       return(false)
     }
 
     if(this.state.postalCode.length === 0){
-      alert('The postal code field cannot be empty')
+      alert('The postal code field cannot be empty');
       return(false)
     }
 
     if(this.state.currentPrice.length !== 0){
       if(isNaN(this.state.currentPrice)){
-        alert('The price field must contain a number')
+        alert('The price field must contain a number');
         return(false)
       }
     } else {
-      alert('The price field cannot be empty')
+      alert('The price field cannot be empty');
       return(false)
     }
 
     if(this.state.avgRating.length !== 0){
       if(isNaN(this.state.avgRating)){
-        alert('The average rating field must contain a number')
+        alert('The average rating field must contain a number');
         return(false)
       }
     } else {
-      alert('The average rating field cannot be empty')
+      alert('The average rating field cannot be empty');
       return(false)
     }
 
@@ -72,22 +72,22 @@ export default class Create_spot extends Component{
 
   test = () => {
     console.log(this.state)
-  }
+  };
 
   create = () => {
 
-    var values = []
-    var keys = Object.keys(localStorage)
+    var values = [];
+    var keys = Object.keys(localStorage);
     var i = keys.length;
 
     while ( i-- ) {
       values.push( localStorage.getItem(keys[i]) );
     }
 
-    const user = JSON.parse(values[0])
+    const user = JSON.parse(values[0]);
 
-    console.log(user)
-    console.log(String(user.last_Name))
+    console.log(user);
+    console.log(String(user.last_Name));
 
     if(!this.validateForm()){
       return false;
@@ -117,11 +117,12 @@ export default class Create_spot extends Component{
       {
         "pkey" : "1"
       }
-    }
-    let self = this
+    };
+    let self = this;
     var headers = {
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*'}
+      'Access-Control-Allow-Origin': '*'
+    };
 
      swal({
               title: "Are you sure?",
@@ -152,13 +153,22 @@ export default class Create_spot extends Component{
                 swal("You did not create a parking spot");
               }
             });
-  }
+  };
+
+    buttonStyle = {
+        borderRadius: '10px',
+        fontFamily: 'Georgia'
+    };
+
+    displayStyle = {
+        width: '50%'
+    };
 
   render() {
 
     return (
 
-      <div>
+      <div style={this.displayStyle}>
       <FormGroup controlId="streetName" bsSize="small">
       <ControlLabel>Street Name</ControlLabel>
       <FormControl
@@ -204,7 +214,7 @@ export default class Create_spot extends Component{
       />
       </FormGroup>
 
-      <button onClick={this.create}>Create a parking spot</button>
+      <button style={this.buttonStyle} onClick={this.create}>Create Spot</button>
       </div>
     );
   }

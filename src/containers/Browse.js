@@ -244,9 +244,14 @@ export default class Browse extends Component{
     };
 
     divStyle = {
-        backgroundColor: '#A9A8E8',
+        backgroundColor: '#A9C5E8',
         borderStyle: 'solid',
-        margin: '10px'
+        margin: '10px',
+        borderColor: '#A9C5E8',
+        padding: '15px',
+        width: '50%',
+        borderRadius: '25px',
+        fontFamily: 'Georgia'
     };
 
     calendarStyle = {
@@ -259,7 +264,8 @@ export default class Browse extends Component{
     };
 
     buttonStyle = {
-       // text-align: 
+        borderRadius: '10px',
+        fontFamily: 'Georgia'
     };
 
     render(){
@@ -279,7 +285,7 @@ export default class Browse extends Component{
                             <p>Postal Code: {todo.postal_Code }</p>
                             <p>Price: {todo.current_Price}</p>
                             <p>Rating: {todo.avg_Rating}</p>
-                            <button onClick={(event) => this.reserve(todo, event)}>Reserve</button>
+                            <button style={this.buttonStyle} onClick={(event) => this.reserve(todo, event)}>Reserve</button>
                         </div>
                     </div>
                 </div>
