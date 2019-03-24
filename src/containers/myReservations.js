@@ -90,9 +90,19 @@ export default class myReservations extends Component{
     }
 
     divStyle = {
-        backgroundColor: '#A9A8E8',
+        backgroundColor: '#A9C5E8',
         borderStyle: 'solid',
-        margin: '10px'
+        margin: '10px',
+        borderColor: '#A9C5E8',
+        padding: '15px',
+        width: '50%',
+        borderRadius: '25px',
+        fontFamily: 'Georgia'
+    };
+
+    buttonStyle = {
+        borderRadius: '10px',
+        fontFamily: 'Georgia'
     };
 
     reservationList() {
@@ -112,7 +122,7 @@ export default class myReservations extends Component{
                             <p> End Time: {todo.end_Time} </p>
                             <p> Total Cost: {todo.price_Paid} </p>
                             <p> Rating: {todo.parkingSpot.avg_Rating} </p>
-                            <button onClick={(event) => this.cancelReservation(todo)}> Cancel </button>
+                            <button style={this.buttonStyle} onClick={(event) => this.cancelReservation(todo)}> Cancel </button>
                             </div>
                         </div>
                     </div>
