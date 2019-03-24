@@ -1,6 +1,7 @@
 import React,{Component} from "react";
 import { Button, Form, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import axios from 'axios';
+import swal from 'sweetalert';
 
 export default class Create_spot extends Component{
 
@@ -121,16 +122,36 @@ export default class Create_spot extends Component{
     var headers = {
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*'}
-      axios.post('https://parking-system-ecse428.herokuapp.com/spot', data, headers )
-      .then((function (response){
-        if(response.status == 200){
-         self.props.history.push("/browse");
-        }
-     })).catch(function (error){
-       console.log(error.response);
-       console.log('Failed');
-     });
 
+     swal({
+              title: "Are you sure?",
+              text: "You are about to create a parking spot!",
+              icon: "warning",
+              buttons: ["Don't create", "Create!"],
+              dangerMode: true,
+            })
+            .then((willCreate) => {
+              if (willCreate) {
+                 axios.post('https://parking-system-ecse428.herokuapp.com/spot', data, headers )
+                      .then((function (response){
+                        if(response.status == 200){
+                         swal("You have successfully created a parking spot!", {
+                              icon: "success",
+                         });
+                         self.props.history.push("/browse");
+                        }
+                     })).catch(function (error){
+                       swal("Oops something went wrong! You may want to contact the development team.", {
+                           icon: "error",
+                        });
+                       console.log(error.response);
+                       console.log('Failed');
+                     });
+
+              } else {
+                swal("You did not create a parking spot");
+              }
+            });
   }
 
   render() {
