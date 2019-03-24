@@ -1,6 +1,6 @@
 import React,{Component} from "react";
 import Calendar from 'react-calendar';
-
+import swal from 'sweetalert';
 import axios from 'axios';
 
 export default class Browse extends Component{
@@ -141,16 +141,39 @@ export default class Browse extends Component{
 
                 var reservationUrl = 'https://parking-system-ecse428.herokuapp.com/reservation';
 
-                axios.post(reservationUrl, reservation)
-                    .then((response) => {
-                        if(response.status == 200) {
-                            self.displayAds();
-                            console.log("Reservation created");
-                        }
-                }).catch((error) => {
-                    console.log(error.response);
-                    console.log("Failed");
-                });
+
+     swal({
+          title: "Are you sure?",
+          text: "You are about to reserve the parking spot on " + todo.street_Number + " " + todo.street_Name + "!",
+          icon: "warning",
+          buttons: ["Don't reserve", "Reserve"],
+          dangerMode: true,
+        })
+        .then((willReserve) => {
+          if (willReserve) {
+             axios.post(reservationUrl, reservation)
+                              .then((response) => {
+                                  if(response.status == 200) {
+                                    swal("You have successfully reserved the parking spot!", {
+                                        icon: "success",
+                                    });
+                                      self.displayAds();
+                                      console.log("Reservation created");
+                                  }
+                          }).catch((error) => {
+                               swal("Oops something went wrong! You may want to contact the development team.", {
+                                    icon: "error",
+                              });
+                              console.log(error.response);
+                              console.log("Failed");
+                          });
+
+          } else {
+            swal("You did not reserve the parking spot.");
+          }
+        });
+
+
 
             }
         }));
