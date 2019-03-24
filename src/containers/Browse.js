@@ -251,7 +251,7 @@ export default class Browse extends Component{
         padding: '15px',
         width: '50%',
         borderRadius: '25px',
-        fontFamily: 'Georgia'
+        fontFamily: 'Georgia',
     };
 
     calendarStyle = {
@@ -265,7 +265,22 @@ export default class Browse extends Component{
 
     buttonStyle = {
         borderRadius: '10px',
+        fontFamily: 'Georgia',
+        paddingLeft: '10px',
+        paddingRight: '10px'
+    };
+
+    buttonsDiv = {
+        display: 'flex',
+        justifyContent: 'center',
+        borderRadius: '10px',
         fontFamily: 'Georgia'
+    };
+
+    divider = {
+      width: '5px',
+      height: 'auto',
+      display: 'inline-block'
     };
 
     render(){
@@ -313,11 +328,13 @@ export default class Browse extends Component{
                     </div>
 
                 </div>
+                    <div style={this.buttonsDiv}>
                     <button disabled={!this.checkDates()} onClick={(event) => this.displayAds(event)} style={this.buttonStyle} >Show All Ads</button>
-                    {" "}
+                        <div style={this.divider}></div>
                     <button disabled={!this.checkDates()} onClick={(event) => this.filterStreet(event)} style={this.buttonStyle} >Filter Ads by Street Name</button>
-                    {" "}
+                        <div style={this.divider}></div>
                     <button disabled={!this.checkDates()} onClick={(event) => this.filterPostal(event)} style={this.buttonStyle} >Filter Ads by Postal Code</button>
+                    </div>
                     <div>
                         {list}
                     </div>
