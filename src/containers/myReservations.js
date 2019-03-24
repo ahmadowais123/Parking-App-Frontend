@@ -1,5 +1,7 @@
 import React,{Component} from "react";
 import axios from 'axios';
+import swal from 'sweetalert';
+
 
 export default class myReservations extends Component{
     constructor(props) {
@@ -54,20 +56,33 @@ export default class myReservations extends Component{
 
 
     cancelReservation(todo) {
-
         var self = this;
-        axios.post("https://parking-system-ecse428.herokuapp.com/reservation/delete/" + todo.pkey)
-            .then((function (response){
-                if(response.status == 200){
-                    console.log("Reservation successfully deleted");
-                    // localStorage.setItem('myData', JSON.stringify(response.data));
-                    self.updateReservations();
+        swal({
+          title: "Are you sure?",
+          text: "You are about to cancel your reservation for the parking spot on " + todo.parkingSpot.street_Number + " " + todo.parkingSpot.street_Name + "!",
+          icon: "warning",
+          buttons: true,
+          dangerMode: true,
+        })
+        .then((willDelete) => {
+          if (willDelete) {
+           axios.post("https://parking-system-ecse428.herokuapp.com/reservation/delete/" + todo.pkey)
+                      .then((function (response){
+                          if(response.status == 200){
+                                swal("Your reservation has been cancelled!", {
+                                            icon: "success",
+                                          });
+                              self.updateReservations();
 
-                }
-            }))
-        //this.render();
+                          }
+                      }))
 
+          } else {
+            swal("Your imaginary file is safe!");
+          }
+        });
     }
+
     divStyle = {
         backgroundColor: '#A9A8E8',
         borderStyle: 'solid',
