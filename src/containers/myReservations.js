@@ -102,7 +102,7 @@ export default class myReservations extends Component{
                 <div key={index}>
                     <div>
                         <div style={this.divStyle}>
-                            <h3> Parking {index+1} </h3>
+                            <h3> Reservation {index+1} </h3>
                             <hr></hr>
                             <p> Address: {todo.parkingSpot.street_Number} {todo.parkingSpot.street_Name} </p>
                             <p> Postal Code: {todo.parkingSpot.postal_Code} </p>
