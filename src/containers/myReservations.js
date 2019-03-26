@@ -122,7 +122,7 @@ export default class myReservations extends Component{
                             <p> End Time: {todo.end_Time} </p>
                             <p> Total Cost: {todo.price_Paid} </p>
                             <p> Rating: {todo.parkingSpot.avg_Rating} </p>
-                            <button style={this.buttonStyle} onClick={(event) => this.cancelReservation(todo)}> Cancel </button>
+                            <button style={this.buttonStyle} onClick={(event) => this.cancelReservation(todo)}>Cancel</button>
                             </div>
                         </div>
                     </div>
