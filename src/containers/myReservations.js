@@ -109,7 +109,7 @@ export default class myReservations extends Component{
         let reservations = this.state.reservation;
         if (reservations.length > 0) {
             var list = reservations.map((todo, index) => (
-                <div key={index}>
+                <div id={index}>
                     <div>
                         <div style={this.divStyle}>
                             <h3> Reservation {index+1} </h3>
