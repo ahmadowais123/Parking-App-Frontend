@@ -210,7 +210,7 @@ export default class Browse extends Component{
           title: "Are you sure?",
           text: "You are about to reserve the parking spot on " + todo.street_Number + " " + todo.street_Name + "!",
           icon: "warning",
-          buttons: ["Don't reserve", "Reserve"],
+          buttons: ["Don't reserve", "Reserve!"],
           dangerMode: true,
         })
         .then((willReserve) => {
