@@ -14,12 +14,14 @@ export default class myReservations extends Component{
         };
     }
 
+    //Sets state and re-renders
     async componentDidMount(){
         var self = this;
         var values = [];
         var keys = Object.keys(localStorage);
         var i = keys.length;
 
+        //Filling data from localStorage
         while ( i-- ) {
             values.push( localStorage.getItem(keys[i]) );
         }
@@ -34,6 +36,7 @@ export default class myReservations extends Component{
         console.log(this.state.reservation);
     }
 
+    //Gets user data from local storage, checks database for reservations tied to user and sets state according to fetched Reservations
     updateReservations() {
         var self = this;
         var values = [];
@@ -55,6 +58,8 @@ export default class myReservations extends Component{
     }
 
 
+    //Deletes reservation associated with user in the backend
+    //Sweet Alert pops up, if Promise true then deletes reservation otherwise if error occurs, error alert pops up or user chooses to not cancel
     cancelReservation(todo) {
         var self = this;
         swal({
@@ -89,6 +94,7 @@ export default class myReservations extends Component{
         });
     }
 
+    //Styling
     divStyle = {
         backgroundColor: '#A9C5E8',
         borderStyle: 'solid',
@@ -105,6 +111,7 @@ export default class myReservations extends Component{
         fontFamily: 'Georgia'
     };
 
+    //Renders users reservations along with cancellation button, updated upon cancellation
     reservationList() {
         let reservations = this.state.reservation;
         if (reservations.length > 0) {

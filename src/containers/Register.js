@@ -7,7 +7,7 @@ import {validateEmail} from "./Helpers.js";
 //check login page for more comments
 
 
-
+//State consists of Name, email, role, username and passwords (2 password fields to ensure correct password set)
 export default class Register extends Component {
   constructor(props) {
     super(props);
@@ -24,6 +24,7 @@ export default class Register extends Component {
     };
   }
 
+  //Validates correct inputs
   validateForm() {
     return validateEmail(this.state.email) && this.state.password.length > 0 && 
     this.state.firstName.length > 0 && this.state.lastName.length > 0 &&
@@ -40,6 +41,7 @@ export default class Register extends Component {
     event.preventDefault();
   };
 
+  //Sets fields to inputs in text boxes when Register button clicked, to be passed into our data variable and posted to Database
   handleClick = event =>{
     var self = this;
     var usrf = this.state.firstName;
@@ -49,22 +51,13 @@ export default class Register extends Component {
     var usrn = this.state.username;
     var renter = true;
     var seller = true;
-    
-    // if (this.state.role === "Renter"){
-    //   renter = true;
-    //   seller = false;
-    // }
-
-    // else if (this.state.role === "Seller"){
-    //   renter = false;
-    //   seller = true;
-    // }
 
     var headers1 = {
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*'
     };
 
+    //Collects data from page, stores as object
     var data = {
           firstName: usrf,
           lastName: usrl,
@@ -80,6 +73,8 @@ export default class Register extends Component {
         headers: headers1
       };
 
+      //Posted to database, if successful, stores current state and login status in localStorage
+      //Redirects to browse page upon success, if failure then alert pop-up
     axios.post("https://parking-system-ecse428.herokuapp.com/user", data)
         .then((function (response){
             if(response.status == 200){
@@ -120,6 +115,7 @@ export default class Register extends Component {
 
   };
 
+  //Renders input fields and sets state
   render() {
 
     return (
@@ -159,15 +155,6 @@ export default class Register extends Component {
               onChange={this.handleChange}
             />
           </FormGroup>
-          {/* <FormGroup controlId="role" bsSize="medium">
-              <ControlLabel>Role</ControlLabel><br/>
-              <select value={this.state.role}  onChange={this.handleChange} id="role">
-                  <option value="Renter">Renter</option>
-                  <option value="Seller">Seller</option>
-              </select>
-              <p></p>
-              <p>{this.state.value}</p>
-          </FormGroup> */}
           <FormGroup controlId="username" bsSize="medium">
             <ControlLabel>Username</ControlLabel>
             <FormControl

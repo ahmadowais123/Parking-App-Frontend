@@ -5,7 +5,9 @@ import Routes from "./Routes";
 import { Nav, Navbar, NavItem } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 
-
+/*
+* App renders links on the main page according to user log-in status which is persisted in localStorage
+*/
 //Add tabs to the navigation bar here
 
 class App extends Component {
@@ -16,17 +18,24 @@ class App extends Component {
     };
   }
 
+  //Used to check if user has successfully logged in -- renders different navbar according to authentication status
   userHasAuthenticated = (authenticated) => {
     console.log("in authenticated func");
     this.setState({ isAuthenticated: authenticated });
   };
 
+  //Logs user out and sets localStorage loginStatus false
   handleLogout = async event => {
     this.userHasAuthenticated(false);
     localStorage.setItem('loginStatus', 'false');
     this.props.history.push("/home");
   };
 
+
+  /*
+  If user is new or logged out then Register and Login are only options available -- If logged in then Browse, Create Spot, Reservations
+  and Logout are rendered
+   */
   render() {
     const childProps = {
       isAuthenticated: this.state.isAuthenticated,

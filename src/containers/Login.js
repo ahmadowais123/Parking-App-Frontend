@@ -14,6 +14,7 @@ export default class Login extends Component {
     };
   }
 
+  //Used to check if correct inputs given - only then can login button be clicked
   validateForm() {
     return validateEmail(this.state.email) && this.state.password.length > 0;
   }
@@ -36,6 +37,9 @@ export default class Login extends Component {
     var data = {};
 
     var self = this;
+
+    //Check database for whether user exists -- if true then login and redirect to Browse page, otherwise alert with invalid credentials
+
     axios.post('https://parking-system-ecse428.herokuapp.com/user/authenticate', data, {headers: headers} )
     .then((function (response){
          if(response.status == 200){
@@ -67,6 +71,7 @@ export default class Login extends Component {
     event.preventDefault();
   };
 
+  //Renders the login and password fields, sets state according to input
   render() {
     return (
       <p className="Login">

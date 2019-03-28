@@ -12,7 +12,7 @@ export default class Browse extends Component{
         endDate: null
     };
 
-
+    //Checks if start date before end date -- enables buttons if true
     checkDates() {
         console.log(this.state.startDate);
         console.log(this.state.endDate);
@@ -23,11 +23,11 @@ export default class Browse extends Component{
             return false;
         }
     }
-
+    //Sets start date
     onChange = (startDate) => {
         this.setState({startDate});
     };
-
+    //Sets end date
     onChangeEnd = (endDate) => {
         this.setState({endDate});
     };
@@ -40,13 +40,13 @@ export default class Browse extends Component{
         });
     };
 
-
+    //Formats date to be compliant with backend format
     formatDate = (date) => {
         var date2 = date.toISOString().substr(0, 19).replace('T', ' ');
         return date2;
     };
 
-
+    //Fetches Ads from database according to dates input
     displayAds = (event) => {
            let url = "https://parking-system-ecse428.herokuapp.com/spot/getFreeSpots";
            var startDate = this.formatDate(this.state.startDate);
@@ -59,6 +59,8 @@ export default class Browse extends Component{
            });
     };
 
+    //Filters the ads displayed according to Street name(case sensitive) input and fetches from database
+    //Sweet Alert pops up for confirmation upon button click if promise true otherwise Error if street name doesn't exist
     filterStreet = (event) => {
                swal({
                  text: 'Search for a parking spot by entering a street name (case sensitive!)',
@@ -91,6 +93,8 @@ export default class Browse extends Component{
                  })
     };
 
+    //Fetches Ads from database according to postal code
+    //Sweet Alert pops up for confirmation if Promise true otherwise error if no postal code exists
     filterPostal = (event) => {
                    swal({
                      text: 'Search for a parking spot by entering a postal code (case sensitive!)',
@@ -123,6 +127,9 @@ export default class Browse extends Component{
                      })
         };
 
+        //Get user data from localStorage as well as spot data from state and owner data from database
+        //Formats date and posts required information into database
+        //Sweet Alert pops up upon click and re-renders page upon confirmation
     reserve = (todo, event) => {
         var self = this;
         var values = [];
@@ -243,6 +250,7 @@ export default class Browse extends Component{
         }));
     };
 
+    //Styling
     divStyle = {
         backgroundColor: '#A9C5E8',
         borderStyle: 'solid',
@@ -283,6 +291,8 @@ export default class Browse extends Component{
       display: 'inline-block'
     };
 
+    //Once no longer loading, renders page with React-Calendar and Parking Spot fields + Reservation and filter buttons
+    //Buttons disabled until correct dates input
     render(){
         if(this.state.loading){
             return (

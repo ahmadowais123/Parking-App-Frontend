@@ -8,7 +8,7 @@ import Browse from "./containers/Browse";
 import Reservation from "./containers/myReservations";
 import NotFound from "./containers/NotFound"
 import Create_spot from "./containers/Create_spot";
-//essentially for switching between tabs
+//Matches URL to which page to display
 export default ({ childProps }) =>
   <Switch>
    <AppliedRoute path="/" exact component={Home} props={childProps}/>

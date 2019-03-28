@@ -5,6 +5,7 @@ import swal from 'sweetalert';
 
 export default class Create_spot extends Component{
 
+  //Necessary state variables required in spot creation
   state = {
     pkey : "",
     addressNumber : "",
@@ -22,6 +23,7 @@ export default class Create_spot extends Component{
     });
   };
 
+  //Error checking in input fields
   validateForm() {
 
     var PCregex = new RegExp(/([ABCEGHJKLMNPRSTVXY]\d)([ABCEGHJKLMNPRSTVWXYZ]\d){2}/i);
@@ -74,6 +76,8 @@ export default class Create_spot extends Component{
     console.log(this.state)
   };
 
+  //Fetches user data from localStorage, spot data from state and posts to backend upon clicking once all validation checks done
+  //Sweet Alert pops up for confirmation
   create = () => {
 
     var values = [];
@@ -164,6 +168,7 @@ export default class Create_spot extends Component{
         width: '50%'
     };
 
+    //Renders input fields for spot creation and calls create() function on click
   render() {
 
     return (
